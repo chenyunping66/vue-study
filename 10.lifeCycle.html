@@ -1,0 +1,106 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-04 18:08:47
+ * @LastEditTime: 2020-08-05 08:54:55
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\10.lifeCycle.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue生命周期</title>
+</head>
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    // vue 的初始化过程中，会让用户传入很多的函数，会在不同的时间点被调用
+
+    // 生命周期中都会有this,指向的是当前实例
+    // 生命周期是同步执行的
+
+// 父子组件的生命周期：父组件先进行：beforeCreate created beforeMount render  
+//                   渲染子组件 beforeCreate  created beforeMount mounted
+
+// _init方法
+//   Vue.mixin原理：调用_init方法时候合并，判断对象类型，将属性合并在一起，组成一个数组。当组件初始化的时候会一次去执行这些生命周期
+    Vue.mixin({ //是全局方法  globalApi都有
+      beforeCreate(){
+        console.log('初始化前的公共逻辑111')
+      },
+      data(){
+          return {aa:'helloxx'}
+      },
+      mounted(){
+        console.log('混合的')
+      },
+      methods:{
+        fn(){
+          
+        }
+      }
+    })
+    // 作用：抽离公共方法+编写插件  vuex vue-router(this.$router)都是采用混入的
+    
+    // 导致这个方法来源不知道怎么赖的，问题：Vue3.0  compositionApi来解决这个问题
+    // 面试题：ajax应该在哪里发请求:1.操作真实dom再created(异步请求一定是在mounted之后才会执行)
+    // 3.如果开发的前端vue项目 mounted中
+    // 4.服务端渲染的vue不支持mounted在服务器中 在服务器中没有dom概念，所以放在created
+    let vm = new Vue({
+      el:"#app",
+      // [beforeCreate,beforeCreate]
+      beforeCreate(){
+        // 创建前
+        // 初始化之前，没有进行数据观测，只是调用了初始化父子关系，以及内部的事件
+        // 一般情况不会混入公共逻辑Vue.mixin
+        console.log('before Create2222',this);
+      },
+      created(){
+        // 没有真实的挂载元素，只是初始化数据，无法获取到dom元素的
+        console.log('created',this)
+      },
+      // <template></template> 
+    
+      beforeMount(){  //在第一次调用render之前执行
+        console.log('beforeMount',this)
+      },
+      render(){
+        console.log('render')
+        return h('div',this.msg
+        +this.aa)
+      },
+      // {mounted,mounted]}
+      mounted(){  //创建出真实的dom,替换掉老的节点 vm.$el替换掉el
+      // vm.$el渲染的真实dom
+        console.log('挂载完成',this)
+      },
+      beforeUpdate(){  //可以做一些合并更新的操作
+        console.log('更新之前')
+      },
+      updated(){  //不要再更新数据了，不然会造成死循环
+      this.msg = Math.random();
+        console.log('更新前',this)
+      }, 
+      beforeDestroy(){  //1.自定义事件的解绑，$off 2.可以去取消dom事件绑定 3.定时器的清理
+        console.log('销毁后',this)
+      },
+      Destroy(){
+        console.log('销毁完成',this)
+      },
+      data(){
+        return{
+          msg:'vue生命周期'
+        }
+      }
+    })
+    vm.msg="world"
+    wm.$destory()  //手动清理，只是移除监听与react不同（清楚全部dom）
+  </script>
+</body>
+</html>

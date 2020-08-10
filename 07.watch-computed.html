@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{checks}}
+    全选反选
+    <input type="checkbox" v-model="checkAll" @change="o=>checkAll">
+    <hr>
+    <input type="checkbox" v-for="check in checks" v-model="check.check">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+  let vm = new Vue({
+    el:"#app",
+    data(){
+      return{
+        msg:{
+          a:1,
+        checks: [{ check: true }, { check: true }, { check: true }],
+        // checks: [{ 0: true }, { 1: true }, { 3: true }],
+
+      // checkAll:'',
+      // checks:[{check:true},{check:true},{check:true}]
+      }}
+    },
+    computed: {
+      checkAll: {
+        get() {
+          // 当取值时候会执行Get方法
+          // every查找每一项是否有false,若有一项是false，就停止查找false
+          // console.log(checks,'999')
+          // return this.checks.every((item)=>item.check)
+        },
+        // 反选功能
+        set(newValue){
+           //计算属性很少用set方法，一般只有使用v-model计算属性才会添加set方法 
+            this.checks.forEach(item=>{
+              item.check = newValue
+            })
+          }
+      }
+    },
+    methods:{
+      
+      fn(){
+        console.log('这是methods中的函数')
+      }
+    },
+    //watch的三种写法：函数，对象，字符串
+    watch:{
+      msg:[{
+        // 写法一：函数包装对象
+      handler(newValue,oldValue){
+        console.log(newValue,oldValue)  //如果是对象类型无法进行取老值
+      },
+      deep:true  //如果當前屬性增加了deep：true,就會再對這個對象内部進行取值
+    },{
+      // 写法二
+      handler(newValue,oldValue){
+        console.log(newValue,oldValue)
+      },
+      immediate:true, //立即执行
+    },
+    //第三种写法：字符串
+    'fn'
+    // xxx:'fn',
+  ],
+    }
+  });
+  setTimeout(()=>{
+    // vm.msg.a=100;
+    vm.msg=100;
+  },1000)
+
+  // 总结：计算属性和watch的区别':都是一个watcher
+  // 计算属性：内部都不会立马获取值。只有取值的时候才去执行（有缓存的，如果依赖的数据不发生变化，则不更新结果）
+  //  watch：默认会在内部先执行，要先算出一个老值，如果数据变化会执行回调函数
+  // 算一个结果，不会使用methods,methods不具备缓存
+</script>
+</body>
+</html>

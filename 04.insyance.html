@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue核心概念</title>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+   
+  </div>
+
+  <script>
+    
+    let vm = new Vue({
+      // el: '#app',
+      template:'<div>测试</div>',
+      data() {
+        return {
+          msg: {
+            b: 1,
+          },
+          arr: [1, 2, {c:999}]
+        }
+      }
+    })
+
+    // 第三节课：
+    // vue中实例常用属性
+    //1.
+    vm.$mount() //拿到渲染后的真实DOM 挂载，表示要手动挂栽，可以挂载到页面任何地方，以前写法只能放到app中
+    console.log(vm.$el) //<div>测试</div>   想放哪里放哪里
+    document.body.appendChild(vm.$el) //测试 内部是替换不是直接覆盖
+    //2.
+    console.log(vm.$options); //用户传入组件实例的参数所有的选项和vue中的内置属性
+    //3.
+    vm.$watch('msg',function(newValue,oldValue){
+      console.log(newValue)
+    })
+    vm.msg = 'worff';
+    vm.msg = 23323;
+    vm.msg = 999; //watch批量监听只会只会更新一次
+    //4.
+    // vm.$data（当前数据）= vm._data
+    //vm.$nextTick  vm.$set vm.$options vm.$delete vm.$mount
+ </script>
+</body>
+<style>
+
+</style>
+
+</html>

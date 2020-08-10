@@ -1,0 +1,62 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-02 17:13:12
+ * @LastEditTime: 2020-08-04 18:10:47
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\08.fiflter.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>过滤器</title>
+</head>
+<body>
+  <div id="app">
+    {{timer | format('YYYY:MM:DD')}}
+    {{timer | format('YYYY:MM:DD hh:mm:ss')}}
+
+  </div>
+    <div id="app2">
+    
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script src="./node_modules///moment/moment.js"></script>
+  <script>
+    // 过滤器就是将原数据进行格式显示，而不改变原数据
+    // 方法 计算属性
+    // 做一些时间格式化。加一些货币符号
+    // 全局过滤器 局部过滤器
+    Vue.filter('format',function(timer,formatter){
+      //fiflter没有this
+      // npm install moment 时间格式化插件
+      return moment(timer).format(formatter)
+
+    })
+  let vm = new Vue({
+    el:"#app",
+    // filfter:{
+
+    // }
+    data(){
+      return{
+        msg:'',
+        timer:12311313181737
+
+      }
+    }
+  })
+  // let vm = new Vue({
+  //   el:"#app2",
+  //   data(){
+  //     return{
+  //       msg:''
+  //     }
+  //   }
+  // })
+  </script>
+</body>
+</html>

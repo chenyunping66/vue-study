@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 1. vue中的指令都是v-开头的 -->
+    <!-- 指令一般是用来操作DOM的，指令的功能有封装的作用 -->
+    <div v-once>{{msg}}</div>
+    <!-- //v-once告诉标签他不需要重新被渲染 -->
+    <!-- 2.innerHTML  v-html缺点一： 如果里面有一些脚本的话，会导致xss攻击，劫持脚本:获取用户的cookie,伪造用户的身份。。采用可信任的内容，不用将用户的内容回显 -->
+    <!--v-html缺点二：  会覆盖子元素 -->
+    <!-- <div v-html="img">xxx</div> -->
+<div v-html=""></div>
+    <!--3. v-if v-else v-else-if  vue中给我们提供了一个无意义的标签template,不会让div元素渲染出来-->
+    <!-- v-if控制DOM是否存在 -->
+    <!-- <div v-if="true">  template会让判断的这行代码不显示 -->
+    <template v-if="true">
+      <div>q</div>
+      <div>oo</div>
+    </template>
+    <!-- <div v-else> -->
+    <template v-else>
+      <div>oeee</div>
+      <div>测试</div>
+    </template>
+    <!-- 4.v-show 控制dom上的样式，且v-show不能使用在template上 -->
+    <!-- display: none; -->
+    <!-- 如果用户频繁切换显示隐藏就是用v-show，如果控制dom元素是否产生就用v-if（优点：可以阻止后续逻辑的发生） -->
+    <div v-show="true">
+      <div>q</div>
+      <div>oo</div>
+    </div>
+    <div v-show="false">
+      <div>oeee</div>
+      <div>测试</div>
+    </div>
+
+    <!-- 5,v-for 循环字符串，对象，数字，数组 -->
+    <!-- <hr> -->
+    <!-- of是个关键字，可能会报错，所以用In -->
+    <!-- :表示是变量,可以给索引增加唯一标识，为了避免不冲突。可以添加前缀，但尽量不要使用索引 -->
+    <div v-for="(a,index) in 3" :key="`a_${index}`">{{a}} {{index}}</div>
+    <div v-for="(b,index) in 3" :key="`b_${index}`">{{b}} {{index}}</div>
+      <!-- {{a}} -->
+      <!-- 切记不要使用数组的索引作为key,如果单纯渲染是可以的 -->
+      <!-- 不用数组的索引作为key，那用什么 -->
+    <div v-for="fruit of arr" :key="fruit">
+        {{fruit}}
+    </div>
+    <!-- v-for和v-if不要使用在同一个元素上，目的是导致性能浪费 -->
+    <!-- _l(3,function(){  先循环再判断
+      return false?_c(div,(),fruit)
+    }) -->
+    <!-- 先判断再循环 -->
+    <template v-if="false">
+      <div v-for="fruit of arr" :key="fruit">
+        {{fruit}}
+    </div>
+    </template>
+    <!-- v-for如果放在template上，必须将key放到真实元素上div -->
+    <template v-for="(fruit,index) of arr">
+      <template v-if="index%2">
+        <div :key="index">1</div>
+      </template>
+      <template v-else>
+        <div :key="index">2</div>
+      </template>
+    </template>
+    <!-- 或者有这种需求先用计算属性，先算完后再遍历 -->
+     
+    </div>
+  <!-- </div> -->
+
+</body>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+  let vm = new Vue({
+    el: '#app',
+    data() {
+      return {
+        msg: 'jiayou',
+        arr:['🍌','🍎','🌼']
+        // img: '<img src="xxx" alt=""  onerror="alert(1)">'
+      }
+    }
+  })
+  // vm.msg = 'worl'
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue核心概念</title>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+    jiayou
+    <!-- 当前这个表达式最后会被编译成函数——xxx() -->
+    <!-- 三元表达式 -->
+    {{1+1}}
+    <!-- 不能放js语法，因为最终会将返回值传递给函数 -->
+    {{msg === 'hello'?true:false}}
+    <!-- 函数返回结果 -->
+    {{msg.b}}{{arr}}
+    {{msg.a}}
+  </div>
+  <div class="red blue">123</div>
+  <div class="blue red">123</div>
+  <script>
+    // ###第一天：
+    //vue响应式 ：渐进式框架 
+    //核心 =》 vue组件化开发 =》 vue-router =>vuex => vue-cli
+
+    //什么是库？什么是框架？
+    //jquery为例 jQuery拥有很多方法组成了一个完整功能，通过这些功能实现我们自己的功能
+    //  （主动，手动调用库中的方法）
+    //框架 我们只需要将特定的代码，放到特定位置上，框架会帮我们调用（被动）
+    //mvc 和 mvvm的区别
+    //mvc后端开发 ,model(数据库中的数据) view（前端页面）  controller（后端的控制器）
+
+    //安装vue:
+    // 1.npm init -y   2.npm install vue
+    //vm =》 viewModel
+    let vm = new Vue({
+      el: '#app',
+      // vue中渲染的方式(只限vue版本是runtime-with-compiler(就是render模板的源码代码))，先找render方法 =》再找template（将template编译成render方法）=》再采用外部模板hello
+      // 第一种
+      // template: '<div>测试</div>',
+      // // 第二种
+      // render(h) {
+      //   return h('p', ['hello', 'oo'])
+      // },
+      data() {
+        // 第二节课
+        // 1.响应式的规则
+        // 会递归的去循环vue中的属性（浪费性能的地方）
+        // 会给每个属性都增加getter和setter,当属性变化时会更新视图
+        // 重写了数组中的方法，当调用数组方法时会触发更新，也会对数组中每一项进行监控
+        // 产生问题：
+        //      1.对象只监控默认自带的属性。新增的属性不生效的(好像没有)
+        //      2.数组的索引发生变化，或者数组的成都发生变化，不会触发实体的更新
+        // /     会监控数组中的引用类型
+        return {
+          msg: {
+            b: 1,
+          },
+          arr: [1, 2, {c:999}]
+        }
+      }
+    })
+    //      1.对象只监控默认自带的属性。新增的属性不生效的(好像没有)
+    vm.msg.b = 100;
+    vm.msg.a = 200;
+    //      2.数组的索引发生变化，或者数组的长度发生变化，不会触发实体的更新
+    // vm.arr.length-- 生效
+    vm.$set(vm.arr,0,100);//内部采用的是splice方法
+    vm.$delete(vm.arr,1);
+    vm.arr[2].c=888;
+    //vue2中的缺陷，vue3.0通过proxy进行了解决
+
+    // 第三节课：
+    // vue中实例常用属性
+    // vm.$mount()
+ </script>
+</body>
+<style>
+  .red {
+    color: red
+  }
+
+  .blue {
+    color: blue
+  }
+</style>
+
+</html>

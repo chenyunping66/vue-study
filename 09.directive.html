@@ -1,0 +1,95 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-02 17:26:02
+ * @LastEditTime: 2020-08-04 18:10:37
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\09.directive.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue自定义指令</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 日历组件 点击输入框 可以显示下面的面板 -->
+    <div v-click-outside="hide">
+    <input type="text" @focus="show">
+    <div v-if="isshow">
+      显示面板
+      时间
+    </div>
+  </div>
+  <!-- 自动获取文本框焦点 -->
+  <input type="text" v-focus>
+  </div>
+
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+  let vm = new Vue({
+    el:'#app',
+    // 使用局部指令
+    directives:{
+      focus:{ //操作DOM  v-if v-lazyload v-model v-show v-for
+        inserted(el,bindings,vnode){ //bind+update
+          Vue.nextTick(()=>{
+            el.focus()
+          })
+        }
+      },
+      // el:被绑定的元素，可以用来直接操作DOM。binding:一个对象。VNode接口
+      clickOutside:{
+        // 指令有生命周期，钩子函数：
+        // 1.bind当指令绑定上的时候，会执行一次。
+        // 2.inserted插入的时候。
+        // 3。update当引用的数据变化的时候会执行一个钩子。。。。
+        // componentUpdate unbind 默认写成一个函数的话。bind+update
+
+        bind(el,bindings,vnode){
+    // context上下文实例，指vm里面的内容
+          // console.log(this,el,bindings,vnode)
+          // document.addEventListener('click',function(e){
+            el.handler =function(e){
+            // .contains() 判断一个元素内是否包含另一个元素
+            // e.target当前目标
+            if(!el.contains(e.target)){
+              // expression: 绑定值的字符串形式
+                let method = bindings.expression;
+                // vm.hide()
+                // 去上下文找到这个方法：相当于vm.hide()
+                vnode.context[method]()
+            }
+          }
+          // 添加操作
+          document.addEventListener('click',el.handler)
+        },
+        unbind(el){
+          // 移除指令（卸载）
+            documen.removeEventListener('click',el.handler)
+
+        }
+    
+      }
+    },
+    data(){
+      return{
+        msg:'',
+        isshow:false
+      }
+    },
+    methods:{
+      show(){
+        this.isshow = true
+      },
+      hide(){
+        this.isshow = false
+      }
+    }
+  })
+  </script>
+</body>
+</html>

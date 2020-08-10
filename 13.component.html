@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+  * @Author: your name
+ * @Date: 2020-08-05 13:34:10
+ * @LastEditTime: 2020-08-05 14:50:32
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\13.component.html
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-component></my-component>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    // 组件也有生命周期  组件也分为两种：全局组件和局部组件
+  
+  // 组件，为什么要组件化开发：1.我们可以抽离组件实现复用的效果
+  // 2.可以方便维护代码
+  // 3.可以组件级别更新（给每一个组件都添加一个watcher）
+
+  // 能抽离成单个组件就尽量抽离，可以减少更新（独立）
+
+  // 组件其实就是一个对象
+  // 组件的实例化过程，会通过当前传入的对象，创建出一个实例来
+
+  // 将当前组件相关的html,js,css放在一起
+
+  // 构建一个子类
+ let ctor = Vue.extend({ //返回父类的构造函数
+  template:'<div>{{msg}}</div>',
+  data(){
+    // data必须是一个函数，为了防止组件之间的数据相互引用
+    return{msg:'heool'}
+  }
+  // 单文件组织组件
+ })
+//  我们可以手动挂载组件
+document.body.appendChild(new ctor().$mount().$el)
+console.log(ctor)  //  this._init(options);返回的是一个子的构造器
+
+// Vue.component会调用这个Vue.extend方法
+Vue.component('my-component',ctor)
+  // Vue.component('my-component',ctor{
+  //   template:'<div>{{msg}}</div>',
+  //   data(){
+  //     // data必须是一个函数，为了防止组件之间的数据相互引用
+  //     return{msg:'hello'}
+
+  //   }
+  // })
+  //组件的使用可以在父级的模板中使用
+  let vm = new Vue({
+    el:'#app',
+    data(){
+      return{
+        msg:'00'
+      }
+    },
+    
+  })
+  </script>
+</body>
+</html>

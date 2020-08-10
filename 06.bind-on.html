@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 1.动态绑定样式和绑定style属性，都是可以放对象或者数组两种格式的 -->
+    <div class="red" :class="[red,'blue']">red</div>  
+    <div class="red" :class="{red:true,green:false}"></div>
+
+    <!-- 第二种 -->
+    <!-- 内部绑定样式 -->
+    <div :style="{color:'red'}">六个h</div>
+    <div :style="[{color:'red'},s]">数组和对象的样式</div>
+
+    <!-- 2.其他的绑定，事件绑定也是通过指令的方法 -->
+    <!-- vue里面的事件绑定。直接绑定给当前元素div.addEventListener -->
+    <div @click="fn">点击</div>
+    <!-- 事件是绑定给元素的，而且内部是原生事件 -->
+    <!--3.指令的修饰符，stop（冒泡），prevent(阻止默认行为) .self(只在自己身上触发) .once触发一次
+    .passive修饰符，提高滚动事件的效率，当前没有阻止的默认行为（passived主要用于优化浏览器页面滚动的性能，让页面滚动更顺滑） -->
+    <a href="http://www.baidu.com">
+    <span @click.prevent="fn(1,2,$event)">阻止冒泡事件</span>
+  </a>
+  <hr>
+
+  <!-- 4.v-mode双向绑定，语法糖 -->
+  {{msg}}
+  <!-- <input type="text" :value="msg" @input="handleInput"> -->
+  <!-- 箭头函数简写 -->
+  <!-- <input type="text" :value="msg" @input="(e)=>msg=e.target.value"> -->
+  <!-- v-model简写语法糖 -->
+  <input type="text" v-model="msg">
+  <!-- v-model可以用在复选框？check @change -->
+  <!-- input textarea select radio chexbox -->
+  <hr>
+
+  {{selected}}
+  <select v-model="selected" multiple>
+    <option value="" disabled>请选择</option>
+    <option v-for="o in opts" :key="o.value" :value="o.value">{{o.value}}</option>
+  </select>
+  <hr>
+
+  <!-- checkbox -->
+  <!-- 若选择一个复选框则显示，没有选择一个都不显示 -->
+  <!-- {{checked.length===0?null:checked}}  -->
+  {{checked.length===0?null:checked}}
+  游泳<input type="checkbox" v-model="checked" value="游泳">
+  洗澡<input type="checkbox" v-model="checked" value="洗澡">
+  睡觉<input type="checkbox" v-model="checked" value="睡觉">
+
+  <!-- radio原理一样的。textarea -->
+  <!-- .lazy懒加载，当用户离开鼠标的时候再加载 
+       .trim去除前后空格
+       .number 输入数字-->
+  <hr>
+  {{msg}}
+  <input type="text" v-model.lazy="msg">
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el:"#app",
+      data(){
+        return{
+          msg:'',
+          red:"back",
+          s:{fontSize:'10px'},
+          opts:[{value:1,name:'a'},{value:2,name:'b'}],
+          selected:[],
+          checked:[],
+          // fn(e){   this指向了windown
+          //   console.log(this);
+          //   console.log(e)
+          // }
+        }
+      },
+      methods:{
+        //如果调用时，添加（）,需要手动传递事件源
+        fn(a,b,e){
+          // 这里的this指向的都是当前实例，内部使用了bind方法绑定了this.如果需要再次绑定是不生效的。
+          console.log(this)
+          // 如果通过代理的方式则指的不是同一个，若指的都是一个div，则vue就是将事件绑定在了div上，和react不一样
+          console.log(e.target,e.currentTarget,e)
+        },
+        // 双向绑定事件
+        handleInput(e){
+          this.msg = e.target.value
+        }
+      }
+    })
+  </script>
+</body>
+</html>
