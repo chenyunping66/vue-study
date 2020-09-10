@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script src="./数据类型和parseInt()深度剖析.js"></script> -->
+  <!-- <script src="./变量提升机制.js"></script>
+  < -->
+  <script>
+var i = 0; 
+function  A() {
+  var  i = 10;
+  function x() {
+    console.log(i);
+  }
+  return x;
+}
+var  y = A();
+y();
+function B()
+ {
+   var i = 20;
+   y();
+ }
+ B();
+  </script>
+</head>
+<body>
+</body>
+</html>

@@ -11,7 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@antv/g6": "^3.6.0",
+    "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1"
   }
 }
