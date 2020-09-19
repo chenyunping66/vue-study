@@ -1,0 +1,79 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-13 02:37:42
+ * @LastEditTime: 2020-09-13 14:11:52
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\全栈开发涵盖知识点\客户端和服务端信息交互模型\1.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 京东的DNS预获取:缓存大概只有一分钟左右 -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />   //开启DNS预获取
+  <link rel="dns-prefetch" href="//static.360buyimg.com" />
+  <link rel="dns-prefetch" href="//misc.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img10.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img11.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img12.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img13.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img14.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img20.360buyimg.com" />
+  <link rel="dns-prefetch" href="//img30.360buyimg.com" />
+  <link rel="dns-prefetch" href="//d.3.cn" />
+  <link rel="dns-prefetch" href="//d.jd.com" />
+  <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />    //强制在IE里面走最新的内核edge
+  <meta name="renderer" content="webkit" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AjAX</title>
+  <script>
+    // let link = document.getElementById('link');
+    // console.log(link);
+  </script>
+  <style>
+    box{
+      margin:20px;height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="link">我是按钮</button>
+  <script>
+    // =>基于JS实现页面跳转
+    link.onclick = function () {
+      //  获取当前页面的URL地址
+      let url = window.location.href;
+      // 跳转页面
+      // window.location.href = "http://www.baidu.com";
+      window.open("http://www.baidu.com/"); //在新的窗口跳转
+    }
+
+    // =>现代版浏览器都有“渲染队列”机制：发现某一行修改元素的样式，不立即渲染，而是看看下一行，如果下一行也会改变样式，
+    // 则把修改样式的操作放到“渲染队列中”....一直到不再修改样式的操作后，整体渲染一次，引发一次回流...
+    box.style.width = '100px';
+    box.style.height = '100px';
+    box.style.background = 'red';
+    box.style.margin = '20px auto';
+    //上面的代码发生一次回流，一次重绘
+
+    // > offsetTop、offsetLeft、offsetWidth、offsetHeight、clientTop、clientLeft、clientHeight、scrollTop、scrollLeft、scrollWidth、getComputedStyle、currentStyle......会刷新渲染队列
+    // DOM操作的读写分离
+    box.style.width = '100px';
+    box.style.height = '100px';
+    box.style.background = 'red';
+    box.style.margin = '20px auto';
+    console.log(box.offsetWidth);
+    console.log(box.offsetHight);
+
+// 批量集中修改样式
+    // box.className = 'box';
+    // box.style.cssText = 'margin:20px;height: 200px;'
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则表达式</title>
+</head>
+
+<body>
+  <script>
+    // // <!--
+    // // let reg = /\d/;  // ^/$ 两个都不写：字符串只要包含符合规则的内容即可
+    // // console.log(reg.test('xuexi')); //false
+    // // console.log(reg.test('2020xuexi')); //true
+    // // console.log(reg.test('xuexi2020')); //true -->
+
+    // let str = "chenyunping8888chenyunping8888cyp1688";
+    // let reg = /^\d+$/;
+    // /* 
+    //  *
+    //  * reg.lastIndex: 当前正则下一次匹配的起始位置
+    //  *     懒惰行捕获的原因：默认情况下lastIndex的值不会被修改，每次都是从字符串开始位置查找，所以永远只是第一个
+    //  * 解决办法：使用全局修饰符g
+    //  */
+    // console.log(reg.lastIndex); //0  下次捕获捕获是从str索引零的位置开始
+    // console.log(reg.exec(str));
+    // console.log(reg.lastIndex); //0  第一次匹配捕获完成，lasteIndex没有改变，
+    // // 索引下一次exec依次是从字符串最开找，找到的永远是第一个匹配到的
+
+    // /* 解决懒惰行捕获 */
+    // let str = "chenyunping8888chenyunping8888cyp1688";
+    // let reg = /\d+/g; //全局匹配
+    // console.log(reg.exec(str)); //["8888", index: 11, input: "chenyunping8888chenyunping8888", groups: undefined]
+    // console.log(reg.lastIndex); //15  设置全局匹配修饰符g后，第一次匹配完，lastIndex值会自己修改
+    // console.log(reg.exec(str)); //["8888", index: 26, input: "chenyunping8888chenyunping8888cyp1688", groups: undefined]
+    // console.log(reg.lastIndex); //30
+    // console.log(reg.exec(str)); //["1688", index: 33, input: "chenyunping8888chenyunping8888cyp1688", groups: undefined]
+    // console.log(reg.lastIndex); //37
+    // console.log(reg.exec(str)); //null 当全部捕获后，再次捕获，再次捕获的结果是null,
+    // // 但是lasttIndex的值又回归了初始值零，再次捕获又从第一个开始了
+    // console.log(reg.lastIndex); //0  为0之后继续捕获，就循环起来了....
+    // console.log(reg.exec(str)); //["8888", index: 11, input: "chenyunping8888chenyunping8888cyp1688",
+    // console.log(reg.lastIndex); //15
+
+
+    // let reg = /\d+/g;
+    // if (reg.test(str)) {
+    //   //=> 验证一下：只有正则和字符串匹配我们在捕获
+    //   console.log(reg.lastIndex); //15  基于test匹配验证后，lastIndex已经被培修为第一次匹配后的结果，所以下一次捕获不再从头剋四了
+    //   console.log(reg.exec(str)); //["8888", index: 26, input: "chenyunping8888chenyunping8888cyp1688"
+    // }
+
+    // // ========================================================================================
+    // //需求：编写一个方法execAll,执行依次可以把所有匹配的结果捕获到（前提正则一定要设置全局修饰符g）
+    // ~ function () {
+    //   function execAll(str = "") {
+    //     //=> str要匹配的字符串
+    //     //=> this:RegExp的实例（当前操作的正则）
+    //     // =>进来后的第一件事情，是验证当前正则是否设置了g，不设置则不能在进行循环捕获了，否则会导致死循环
+    //     // let aa = /\d+/g;
+    //     // dir(aa);  //global: true
+    //     if (!this.global) return this.exec(str); //如果不加g，则只要执行一次
+    //     let ary = []; //arg:存储最后所有捕获的信息
+    //     res = this.exec(str); //res:存储每一次捕获的内容
+    //     while (res) {  //判断是否存在res是否为null
+    //       //=> 把每次捕获的内容res[0]存放到数组中
+    //       ary.push(res[0]);
+    //       //=> 只要捕获的内容不为空，则继续捕获下去
+    //       res = this.exec(str);
+    //     }
+    //     return ary.length === 0 ? null : ary;
+    //   }
+    //   RegExp.prototype.execAll = execAll;
+    // }();
+    // let reg = /\d+/g;
+    // console.log(reg.execAll('学习')); // null
+    // console.log(reg.execAll('1029学习2020加油2024真棒')); //["1029", "2020", "2024"]
+
+    // /* 字符串上的match方法也是这个原理：上面的代码就是match的原理源码 */
+    // //=》字符串中的match方法，可以在执行一次的情况下，捕获到所有匹配的数据（前提：正则也得设置G才可以）
+    // let reg = /\d+/g;
+    // console.log('好好学习@'.match(reg)); //null
+    // console.log('1029学习2020加油2024真棒'.match(reg)); //["1029", "2020", "2024"]
+    let str =  "xuexishijiankaixindeshiqinghaha";
+let obj = {};
+[].forEach.call(str,char=>{  //获取数组上的forEach方法
+  //console.log(str);
+  //console.log(item); 
+  if(typeof obj[char] !== "undefined"){
+    //判断是否获取到每个字母
+    //if(obj.hasOwnProperty) 或者if(obj in char)
+
+    obj[char]++;  //每个字符串出现一次就加一次
+    return;
+  }
+});
+console.log(obj);
+  </script>
+
+</body>
+
+</html>

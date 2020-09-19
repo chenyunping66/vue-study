@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浏览器常用的输出方式</title>
+</head>
+
+<body>
+  <script>
+    let a = 10;
+    let b = [{
+        id: 1,
+        name: '张三'
+      },
+      {
+        id: 2,
+        name: '小龙'
+      }
+    ];
+    //1.console.log/dir/table...  在控制台输出
+    // .dir输出一个对象的详细键值对信息
+    // .table 把一个多维JSON数组在控制台按照表格的方式呈现出来
+
+    /*  [12,23] //一维数组 
+     [12,{name"'xxx'}] 二维数组
+     [12,[{xxx:'xxx'}]] 三维数组 */
+
+    //  {name:'xxxx'} 一维对象
+    //  {name:[12,23]} 二维对象
+    //  {   //多维对象
+    //    name:{
+    //      xxx:{
+    //        xxx:{
+    //           xxx:{
+
+    //           }
+    //        }
+    //      }
+    //    }
+    //  }
+
+
+    // {
+    //   fn:function (){
+
+    //   }
+    // }
+
+
+    console.log(a); // "10"
+    console.dir(a); //"10"
+    console.log(document.body);
+    console.dir(document.body);
+    console.table(b);
+    console.dir(console);
+
+    // typeof console  =>"object"
+    // console.dir(console);
+
+    //2.浏览器窗口弹窗 alert/confirm/prompt
+      // => 三种方式输出的结果都必先经过toString转换为字符串
+
+    console.log([12, 34, 56]); //输出的是原始值
+    // alert([12,34,56]);  //"12,34,56"  输出字符串12，34，56
+    // alert({
+    //   name: 'xxx'
+    // }); //[object Object]  会进行toString()
+
+    // => 三种方式会阻断JS代码的执行，只有当窗口关掉，JS才会继续运行
+    for (let i = 0; i < 5; i++) {
+      // alert(i);
+      console.log('haha')
+    }
+    // 确认和取消:选择型弹框
+    confirm('你确定取消吗？');
+    // 在confirm的基础上多了一个输入框
+    prompt('确定要干嘛呢？请写出原因？');
+
+    //3.document。write在页面中写入信息
+    document.write('AAA');  //和alert一样，输出的结果都是字符串
+    document.write({});  //[object Object] 默认情况下，toString()方法会被每个Object对象继承。
+
+
+  </script>
+</body>
+
+</html>

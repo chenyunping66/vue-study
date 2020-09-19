@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@antv/g6": "^3.6.0",
+    "bootstrap": "^4.5.2",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "vue": "^2.6.11"

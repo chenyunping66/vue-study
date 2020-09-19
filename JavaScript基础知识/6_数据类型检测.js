@@ -9,7 +9,7 @@
 */
 console.log(typeof 1); //"number"  返回的结果是字符串number
 let a = NaN;
-console.log(typeof a);    ///控制台输出的蓝色是是字符串，黑色是数字
+console.log(typeof a);    ///控制台输出的蓝色是数字，黑色是字符串
 
 //面试题
 console.log(typeof typeof typeof []); //"object"

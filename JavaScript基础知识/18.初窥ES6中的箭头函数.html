@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>箭头函数</title>
+</head>
+
+<body>
+  <script>
+    function sum(n, m) {
+      return n + m;
+    }
+
+    // 改写成箭头函数
+    let sum = (n, m) => {
+      return n + m
+    }
+
+    // 简写：如果函数体中只有一行return,可以省略return和大括号，一行搞定
+    let sum = (n, m) => n + m;
+
+    console.log(sum(10, 20));
+
+    // =========================
+    function fn(n) {
+      return function (m) {
+        return n + m;
+      }
+    }
+
+    let fn = n => m => n + m;
+
+
+    // 案例二
+    function sum(n, m) {
+      if (typeof n === 'undefined') {
+        n = 0;
+      }
+      if (typeof m === 'undefined') {
+        m = 0;
+      }
+      return n + m;
+    }
+    // 形参赋值默认值：当没有给形参传递实参的时候，执行默认值
+    let sum = (n = 0, m = 0) => n + m;
+
+    // 箭头函数没有arguments
+    let sum =()=>{
+      console.log(arguments);  //报错 Uncaught ReferenceError: arguments is not defined
+    };
+    // 解决办法
+    let sum = (...arg) => {
+      // 但是我们可以用剩余运算符获取到传递的实参集合（它是数组）
+      console.log(arg); // 它不叫类数组，它叫纯数组
+      console.log(arg.join);
+      return eval(arg.join('+'))
+    }
+    sum(1,2,3,4);
+
+    // 任意数求和,下一节学习数组的十几种方法
+    let sum = (...arg) => eval(arg.join(+''));
+    
+  </script>
+</body>
+
+</html>

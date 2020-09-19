@@ -41,7 +41,7 @@ Fn.prototype.write();  //this:Fn.prototype = >
 
 // ============================
 
-//基于内置类原型扩展方法
+//基于内置类原型扩展方法（判断不是原型上的方法）
 Object.prototype.hasPubProperty = function(property){
   //验证传递的属性名合法性（一般只能是数字或者字符串等基本值）
   // <!-- if( !["string","number","boolean"].includes(typeof property)){
@@ -54,7 +54,7 @@ Object.prototype.hasPubProperty = function(property){
   //开始校验是否为公有的属性(方法中的this就是要校验的对象)
   let n = property in this,
       m = this.hasOwnProperty(property);
-  return n && !m; //r如果n为假返回n的值
+  return n && !m; //如果n为假返回n的值
 }
 // this是Array.prototype
 console.log(Array.prototype.hasPubProperty('push')); //false

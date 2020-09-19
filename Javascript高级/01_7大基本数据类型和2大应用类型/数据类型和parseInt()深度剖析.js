@@ -59,7 +59,7 @@
 console.log([] == false); //true 对象和布尔比较 
 // 对象 == 布尔 都转化为数字（隐式转换）
 // 1.对象转换为数字：先toSting转换为字符串（应该是先基于valueOf获得原始值，没有原始值再去toString）,再转换为数字的
-// [] => ''=> 0   ①Number([]) //0 =>②[].valeOf() //[]  => ③[].toSting() //"" =>④Number("") //0 
+// [] => ''=> 0   Number([]) //0 =>①[].valeOf() //[]  => ②[].toSting() //"" =>③Number("") //0 
 // 2.false => 0 ture => 1  //false转化为数字类型为0，true转换为数字为1
 // 3.所以 0 = 0 //true
 console.log(![] == false); //true
@@ -89,12 +89,12 @@ console.log(![] == false); //true
 // "[object Object]"
 
 // 知识点3：把其他类型转换为数字 Number机制
-console.log(Number('')); //0
 console.log(Number('10')); //10
 console.log(Number('10px')); //NaN 只要是出现的非有效数字字符结果都是NaN
 console.log(Number(true)); //1
 console.log(Number(false)); //0
 console.log(Number(null));// 0
+console.log(Number('')); //0
 console.log(Number(undefined)); //NaN
 console.log(Number(Symbol(10))); //报错
 console.log(Number(BigInt(10))); //10 超大数字
@@ -115,7 +115,7 @@ Number("12px") //NaN  //只要遇到一个非有效数字就停止转换，而pa
 isNaN("12px") //true  //隐式转换Number("12px")=》 NaN 所以不是有效数字
 parseFloat("1.6px") + parseInt("1.2px") + typeof parseInt("null")  //"2.6number"
 // 加号运算符优先级是最低的
-// 1.6 + 1 + "number"(typeof NaN)  
+// 1.6 + 1 + "number"(typeof NaN  == "number" NaN是特殊的数字类型)  
 // 2.6 + "number"
 // JS中加号左右两边只要出现字符串（或者对象）都会变成字符串拼接（有特殊性）,如果出现对象也有可能变为字符串拼接，
 // （因为原本把对象转为数字，但是对象转换数字需要先转换为字符串，则+遇到字符串直接变成字符串拼接1+[]）
@@ -127,12 +127,13 @@ isNaN(Number(!!Number(parseInt(0.8)))) //false
 //Number(false) => 0
 // isNaN(0) -> false
 typeof !parseInt(null) + !isNaN(null)  //booleantrue
+//   规则：只有“0、null、undefined、空字符串、NaN”五个值会变为false,其余的都是true
 // parseInt(null) //NaN =>  !NaN  // true  =>typeof(true) //"boolean"
 // isNaN(null ) //0  => Number(0) => false => !false => true
 // "boolean" + true => "booleantrue"
 
 // 面试题2
-let result = 10 + false + [] + 'Renct' + null + true + {};
+let result = 10 + false + [] + 'Renct' + null + true + {};  //"10Renctnulltrue[object Object]"
 // 10+false => 10+0 => 10 ??
 //10 + undefined  => 10 + Number(undefined(非有效数字)) => 10 + NaN =>NaN  任何数字加上NaN都是NaN ？？
 // NaN + [] => "NaN"
@@ -299,7 +300,7 @@ parseInt([value],[radix])
 // 把一个值转化为十进制怎么算
 // 147 （八进制） =》 十进制
 //  1  4   7 [位权值，每一位的权重，个位是0，十位是1...]
-// 1*8^2 + 4*8^1 + 7*^0
+// 1*8^2 + 4*8^1 + 7*8^0
 
 // 12.23(四进制) =》十进制
 // 1*4^1 2*4^0 2*4^-1 2*4^-2

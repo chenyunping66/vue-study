@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鼠标滑过显示详情</title>
+  <!-- import css -->
+  <style>
+    body {
+      margin: 0;
+      padding:0;
+    }
+    .box {
+      /* css3新盒子模型属性：控制width/height是盒子最终的宽高 */
+      box-sizing: border-box;  
+      margin: 20px auto;
+      width: 200px;
+      height: 40px;
+      line-height: 40px;
+      text-align:center;
+      border: 1px solid lightcoral;
+      position: relative;  
+      /* 相对定位 */
+    }
+    .box .detail {
+      display: none;
+      /*绝对定位 */
+      /* 让子元素相对父元素定位 */
+      position: absolute;
+      right: -1px;
+      top: 38px;
+      box-sizing: border-box;
+      width: 500px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      border: 1px solid lightcoral;
+      z-index: -1;  
+      /* 让box的下边框显示为白色，层级覆盖问题 */
+    }
+    .box:hover{
+      border-bottom-color: #fff;
+    }
+    .box:hover  .detail{
+      /* 鼠标滑过显示详情样式 */
+      display: block;
+    }
+    /* 鼠标滑过能够css实现的就不要js实现 */
+  </style>
+</head>
+<body>
+  <!-- 基于CSS实现，我们需要让详情区域是按钮的子元素 -->
+    <div class="box">
+      <span>购物车</span>
+      <div class="detail">
+        购物车的相关信息
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隔行变色和自定义属性的再一次理解</title>
+  <!-- IMPORT CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    #box {
+      margin: 10px auto;
+      width: 500px;
+    }
+
+    #box li {
+      line-height: 50px;
+      border-bottom: 1px solid gainsboro;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 真实项目不用js写的，所有css能够搞定的都不用js写 -->
+  <ul id="box">
+    <li>我是第1个li哈哈哈</li>
+    <li>我是第2个li哈哈哈</li>
+    <li>我是第3个li哈哈哈</li>
+    <li>我是第4个li哈哈哈</li>
+    <li>我是第5个li哈哈哈</li>
+  </ul>
+
+  <!-- IMPORT JS -->
+  <script>
+    var box = document.getElementById('box'); //获取Box
+    // var list = document.getElementsByClassName('li'); //如果文档中还有其他li也会获取
+    var boxList = box.getElementsByTagName('li'); //再获取box里面的li
+    //重复的动作用for循环
+    /* 自定义属性编程思想：
+    *        前期把一些值存储到元素的自定义属性上，后期需要用到的时候，直接从属性上获取到这些值即可
+    */
+    for (var i = 0; i < boxList.length; i++) {
+      // 集合当中有多少项，我就循环多少次
+      // boxList[i]; //里面是元素集合  得到的是当前循环要操作的这个li
+      var bg = i%2 === 0 ? 'white' : 'pink'; 
+      // boxList[i].style.backgroundColor = i%2 === 0 ? 'white' : 'pink';  //设置（不需要提前写）和获取（必须有才可以获取）的区别
+      boxList[i].style.backgroundColor = bg;  //设置（不需要提前写）和获取（必须有才可以获取）的区别
+      // 设置自定义属性myOriginBg用来存储每一个li的背景
+      boxList[i].myOriginBg = bg;  //存储之前的颜色
+      // 任何数除以2为0或者1
+      boxList[i].onmouseover = function(){
+          // this表示当前操作的元素（当前操作的li）
+        this.style.backgroundColor = 'lightblue';
+      }
+      boxList[i].onmouseleave = function(){
+        this.style.backgroundColor = this.myOriginBg;
+
+      }
+    }
+  </script>
+</body>
+
+</html>

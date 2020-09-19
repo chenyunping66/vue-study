@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script src="='./1.js'"></script> -->
+  <style>
+    *{
+  margin: 0;
+  padding: 0;
+}
+ul{
+  list-style: none;
+}
+#tabBox {
+  box-sizing: border-box;
+  margin: 20px auto;
+  width: 500px;
+}
+#navBox{
+  /* 只要把容器设置为flex弹性盒子容器，那么容器中的子元素默认
+  在容器主轴（X轴）水平靠左排列 */
+display: flex;
+/* 横向排列 */
+position: relative;
+top:1px;  
+/* 相对于自己之前的位置定位，然后向下移动一像素 */
+}
+#navBox li{
+  box-sizing: border-box;
+  margin-right: 10px;
+  padding: 0 10px;
+  line-height: 35px;
+  border: 1px solid #999;
+}
+#navBox li:hover{
+  cursor:pointer;
+}
+#navBox li.active{
+  border-bottom-color: #ffffff;
+}
+#tabBox>div{
+  display: none;
+  box-sizing: border-box;
+  padding: 10px;
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+  border: 1px solid #999;
+}
+
+#tabBox>div.active{
+  display: block;
+}
+  </style>
+</head>
+
+<body>
+  <di id="tabBox">
+    <ul id="navBox">
+      <li class="active">编程</li>
+      <li>读书</li>
+      <li>运动</li>
+    </ul>
+    <div class="active">编程使我快乐</div>
+    <div>读书使我幸福</div>
+    <div>运动使我健康</div>
+  </di>
+
+  <script>
+    var tabBox = document.querySelector("#tabBox"),
+      navList = document.querySelectorAll("#navBox li"),
+      divList = tabBox.querySelectorAll('div');
+
+    //封装一个方法实现选项卡切换
+    //函数表达式，把函数当作值赋值给changeTab
+    var changeTab = function (n) {
+      //表达式的方式，变量提升阶段代码逻辑更加严谨（function变量提升阶段先声明定义不严谨）
+      // 表达式的方式，变量提升阶段只是声明，只有等到使用的这个函数的时候再执行
+
+      // n：当前点击的这个li的索引
+      for (var i = 0; i < navList.length; i++) {
+        navList[i].className = '';
+        divList[i].className = '';
+      }
+      navList[n].className = 'active';
+      divList[n].className = 'active';
+    };
+    //循环给每个li绑定点击事件
+    // for (var i = 0; i < navList.length; i++) {
+    //   navList[i].onclick = function () {
+    //       // changeTab(i);  不能这样写 i是循环结束后的结果。
+    //   }
+    // }
+    //原因解析见图：闭包作用之保存（重温选项卡案例).png
+    //面试的时候答出来作用域和作用域链给说来
+
+    //方法一：自定义属性解决
+    // this指向当前操作的元素本身（这种方法是最好的）
+    for (var i = 0; i < navList.length; i++) {
+      // var item = navList[i];这样写也不可以
+      navList[i].myIndex = i; //存储当前执行的0，1，2
+      navList[i].onclick = function () {
+        // changeTab( navList[i].myIndex);    这样也不行
+        console.log(this);
+        changeTab(this.myIndex); //this是当前操作的元素本身
+      }
+    }
+
+//     //方法二：利用闭包存储索引值解决
+//     //  1.闭包可以保存信息（栈内存不销毁即可）,c此处我们保存后续需要的索引信息即可
+//     //  2.执行事件绑定的小函数，遇到i,不让他往全局找，找我们闭包中存储的索引即可（闭包是小函数的上级作用域，也是小函数是在闭包中创建的）
+//     for (var i = 0; i < navList.length; i++) {
+//       ~ function (n) {
+//         navList[n].onclick = function () {
+//           // changeTab( navList[i].myIndex);    这样也不行
+//           changeTab(n); //this是当前操作的元素本身
+//         }
+//       }(i);
+//     }
+//     //闭包方式二
+//     for (var i = 0; i < navList.length; i++) {
+//       navList[i].onclick = (function (n) {
+//           return function () {
+//             // changeTab( navList[i].myIndex);    这样也不行
+//             changeTab(n); //this是当前操作的元素本身
+//           }
+//         })(i);
+//       }
+
+// //第三种方案：之前都是把索引提前存起来，需要用到那个就用那个
+// // 基于es6中的let解决：
+//    for (let i = 0; i < navList.length; i++) {
+//     //  用let的时候i不再是全局的，块级作用域
+//       navList[i].onclick = function () {
+//           changeTab(i); 
+//       }
+//     }
+  </script>
+</body>
+
+</html>

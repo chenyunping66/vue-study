@@ -90,12 +90,12 @@ let a = 12;
 //  ReferenceError(引用错误)： 等到执行到哪一行的时候，发现才执行不了
 
 
-// => 所谓重复是不管之前通过声明办法，只要当前执行上下文中存在了这个变量，我们使用let/const重复再声明这个变量就是语法错误
+// => 所谓重复是不管之前通过声明变量，只要当前执行上下文中存在了这个变量，我们使用let/const重复再声明这个变量就是语法错误
 console.log(a);
 var a = 12;
 let a = 99; //Uncaught SyntaxError: Identifier 'a' has already been declared  直接报错
 console.log(a);
-//不允许重复声明是：不管你用什么办法，我都是允许重复声明
+//不允许重复声明是：不管你用什么办法，我都是不允许重复声明
 
 console.log(a);
 let a = 99;  //Uncaught SyntaxError: Identifier 'a' has already been declared  直接报错

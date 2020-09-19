@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button value="按钮1">按钮1</button>
+  <button value="按钮2">按钮2</button>
+  <button value="按钮3">按钮3</button>
+  <button value="按钮4">按钮4</button>
+  <button value="按钮5">按钮5</button>
+  <script>
+    var btnList = document.getElementsByTagName('button');
+    for (var i = 0; i < btnList.length; i++) {
+      btnList[i].myIndex = i;
+      btnList[i].onclick = function () {
+        // alert(i);  //输出都是5
+        alert(this.myIndex);
+      }
+    }
+
+  /*   //创建函数
+    function fn(n, m) {
+      var res = null;
+      res = n + m;
+      return res;
+    }
+    //执行函数
+    var AA = fn(10, 20);
+    console.log(AA); */
+  </script>
+</body>
+
+</html>

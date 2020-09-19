@@ -1,0 +1,24 @@
+/* 
+ * BT中的样式不一定是最终自己想要的，那么我们就单独的修改即可 
+ *   1.如果自己改的样式不生效，很可能是权重优先级的问题，此时最简单的方法就是设置“!important” 这个权重瞬间变为最大
+ */
+.container {
+	padding: 0;
+}
+
+.card-deck {
+	margin-top: 20px;
+	/* 控制折行 */
+	flex-wrap: wrap;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.card-deck .card {
+	margin: 0 5px 10px 5px;
+	flex: 0 0 218px;
+}
+
+.card-deck .card .card-text{
+	margin-bottom: 10px;
+}

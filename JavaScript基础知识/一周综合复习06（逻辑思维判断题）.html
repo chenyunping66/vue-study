@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算年终奖</title>
+</head>
+<body>
+  工龄:<input type="text" value="1" id="workYear">
+  <br>
+  薪资：<input type="text" value="14000" id="workMoney">
+  <button id="submit">计算年终奖</button>
+  <br>
+  你的年终奖是：￥<span id="valBox"></span>
+  <script>
+     let workYear = document.getElementById('workYear');
+     let workMoney  = document.getElementById("workMoney");
+     let submit = document.getElementById('submit');
+     let valBox = document.getElementById('valBox');
+    //  shift +alt+上键盘 复制到下一行
+    submit.onclick = function() {
+      //  1.获取文本框中的信息
+      // 文本框.value 获取输入的内容，格式是字符串
+      let year = Number(workYear.value);  //将得到的字符串转换为数字
+      let money = Number(workMoney.value); //将得到的字符串转换为数字
+      if(isNaN(year) || isNaN(money)){  //条件或语句。或者 只要有一个为true，结果就为true
+        alert('输入的内容是非法格式');
+        return;
+      }
+      // 2.经过逻辑处理，计算出结果
+      let result = null;  //逻辑计算之前，手动赋值为null,创建变量初始值为null,逻辑计算之后赋值
+      if(year < 1){
+        result = money >= 8000 ? money*1.2 :money;
+      }else if (year >=1 && year <2){
+        result = money>=10000 ? money*1.7 :money*1.5;
+      }else{
+        result = money>= 12000? money*3.2 :money*3;
+      }
+      // 3.把结果赋值给#valBox即可
+      // result = valBox;
+      valBox.innerHTML = result;  //将内容输入到文本框
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #numInp,
+    #submit{
+        box-sizing: border-box;
+        /* padding:10px 15px; */
+        /* height: 35px; */
+          /* 去掉点击的边框 颜色*/
+        outline:none;
+        border: inline-none;
+        border:1px solid rgb(202, 30, 30);
+    }
+    #submit{
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="numInp">
+  <button id="sumbit">点击计算</button>
+  <script>
+    // 1.想操作谁就先获取谁
+    let numInp = document.getElementById('numInp');
+    let sumbit = document.getElementById('sumbit');
+    
+  //2.事件绑定
+  sumbit.onclick = function() {
+    //1.获取文本框中的信息
+    let n = numInp.value;  //获取文本的值
+    // console.log(typeof n);  //"string"
+    //判断文本框里面输入的值的类型
+    n = Number(n);
+  // 2.验证是否为有效数字
+  // if(isNaN(n) === false){  // 如果为false就是有效数字
+    if(!isNaN(n)){
+      //有效数字
+      if(n>0){
+        console.log('正数');
+      }else if(n<0){
+        console.log('负数');
+      }else{
+        console.log('零');
+      }
+    } else{
+      console.log('当前输出的信息非有效数字！')
+    }
+     
+  }
+  </script>
+</body>
+</html>

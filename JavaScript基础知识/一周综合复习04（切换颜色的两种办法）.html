@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    button {
+      padding: 40px;
+      line-height: 40px;
+    }
+  </style>
+</head>
+
+<body style="background-color: white">
+  <button id="changeBtn">点我啊</button>
+
+  <script>
+    let body = document.body;
+    let changeBtn = document.getElementById('changeBtn');
+    ///* 真实项目中不这样写 */
+    // changeBtn.onclick = function () {
+    //   // 首先获取当前背景颜色：元素.style.xxx只能获取行内样式（颜色在样式中使用16进制方式，JS获取获取到的是RGB的值）
+    //   let bg = body.style.backgroundColor;
+    //   console.log(bg);
+    //   switch (bg) {
+    //     case 'white':
+    //       body.style.backgroundColor = 'red';
+    //       break;
+    //     case 'red':
+    //       body.style.backgroundColor = 'green';
+    //       break;
+    //     case 'green':
+    //       body.style.backgroundColor = 'blue';
+    //       break;
+    //     default:
+    //       body.style.backgroundColor = 'white'
+    //   }
+    // }
+
+    /* 真实项目写法 */
+    let ary = ['white', 'pink', 'lightblue', 'lightgreen', 'reg(194,109,109)', 'orange', '#999'];
+    let i = 0; //从数组中拿到某一个样式值只需要：ary[数字索引]
+    // 点击按钮实现功能
+    changeBtn.onclick = function () {
+      i++; //ary[i] 每一次点击基于累加后的i作为索引，，从数组中拿到不同的颜色样式值
+      console.log(i);
+      // 如果索引累加后比数组最大的索引要大，我们让其从零开始即可
+      i > ary.length - 1 ? i = 0 : null; //边界判断（如果i变成最后一个，再从零开始）
+      body.style.backgroundColor = ary[i];
+    }
+  </script>
+</body>
+
+</html>

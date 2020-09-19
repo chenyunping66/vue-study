@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #box {
+      box-sizing: border-box;
+      width: 200px;
+      height: 200px;
+      border:3px solid lightblue;
+    }
+    .AA{
+      background: #43cf6d;
+    }
+  </style>
+</head>
+<body>
+  <div id="box" class="AA"></div>
+  <script>
+    let box = document.getElementById('box');
+    //通过方法获取到元素是对象数据类型的值
+    console.log(typeof box);  //"object"
+    //基于.dir可以看出一个元素的详细信息
+    /* 
+    //box是一个对象，里面包含了很多的键值对（属性名/属性值）
+    * id"操作元素的ID值
+    * className:操作元素的class样式类的值
+    * innerHTML:操作元素的内容（可以识别标签）
+    *  innerText:和innerHTML区别是不能识别标签
+    *  style: 操作元素的行内样式
+    * tagName: 获取元素的标签名（一般大写）
+    * .......
+    * 
+    * style: 操作元素的行内样式，属性值是一个新的对象
+    * style: CSSStyleDeclaration {alignContent: "", alignItems: "", alignSelf: "", alignmentBaseline: "", all: "", …}
+    */
+   //所以我们可以通过box.xxx去获取它的属性
+    console.dir(box);
+    console.log(box.id); //
+    console.log(box.innerHTML);
+    box['onclick'] = function(){}; //因为onclick是它的属性,所以也可以按照对象的方式这样来写
+    // box.id  获取元素的id
+    console.log(box.className);
+    console.log(box.innerHTML = '学习'); //设置内容
+  </script>
+</body>
+</html>

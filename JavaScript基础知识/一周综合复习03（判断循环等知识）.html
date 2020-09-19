@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /* break */
+    for (var i = 0; i < 10; i++) {
+      console.log(i); //0
+      break; //遇到break终止掉整个循环
+    }
+    console.log(i); //0
+
+    /* continue */
+    for (var i = 0; i < 10; i++) {
+      continue; // 遇到continue结束后面的代码，继续执行下一轮循环
+      console.log(i);
+    }
+    console.log(i); //10  i++到10的时候循环自然结束，输出10
+
+    for (var i = 3; i < 12; i++) {
+      if (i < 3) {
+        i++;
+        break;
+      }
+      if (i > 9) {
+        i += 2;
+        continue;
+      }
+      i--;
+    }
+    console.log(i); //这是一个死循环 3不等于3
+
+    /* 改写为三元算符并计算出结果 */
+    let a = 12;
+    if (a >= 0 && a <= 20) {
+      // a%2 读 a膜2：计算a除以2的余数。例如3%2 = 1 4%2=0（切记这个知识，后面需要用到）
+      if (a % 2 === 0) {
+        a += 2;
+      }
+    } else {
+      a -= 2;
+    }
+
+    // 三远元素符改写： a>=0 && a<=20 ?(a%2 === 0 ? a+=2 :null) :a-=2
+    console.log(a);  //结果：14
+
+
+    /* 算出输出结果 */
+    let a = typeof typeof typeof [12,23];
+    console.log(a);  // "string"
+    //typeof 检测数据类型的特点： 1.不管是啥都是一个字符串，2.其次字符串里面才包含对应的数据类型
+    //所以： typeof [12,23]  //"object" => typeof "object" // "string" => typeof "string" //"string" 
+    // （typeof出现两个以及两个以上的typeof的时候，因为typeof不管怎么做，检测的结果最终返回的都是字符串。所以从第二个开始检测的结果就是字符串，
+    // 两个及以上检测的结果，最后检测的结果总会是"string"）
+
+
+    /* == 和 === 的区别 */
+ '10' == 10 //true  两个等号比较，先转换成相同的类型进行比较，把字符串转换成数字，再进行比较
+ '10' === 10 //false 绝对相等；必须类型相等，值也相等
+  </script>
+</body>
+
+</html>

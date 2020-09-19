@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCRIPT位置问题</title>
+  <!-- <script>
+    let box = document.getElementById('box');
+    console.log(box);  //null
+    box.style.color = 'red';  // Uncaught TypeError: Cannot read property 'style' of null
+  </script> -->
+  <!-- //z注意事项：放到头部，可能导致无法获取到需要操作的元素 -->
+  <!-- 解决办法 -->
+  <script>
+    window.onload = function(){
+      //window.onload 事件：当页面中元素全部加载完成才会执行这里面的代码
+      //  JQ也有对应的方法$(document).ready(function(){})
+      let box = document.getElementById('box');
+      box.style.color = 'orange'
+    }
+  </script>
+</head>
+<body>
+  <div id="box">好好学习，努力挣钱</div>
+  <!-- 放在底部，因为浏览器是自上而下执行的 -->
+  <!-- 经常放到body后面，是为了保证页面结构加载完成才去做这些事情 -->
+  <script>
+    let box = document.getElementById('box');
+    console.log(box);  //<div id="box" style="color: red;">好好学习，努力挣钱</div>
+    box.style.color = 'red';  
+  </script>
+</body>
+</html>

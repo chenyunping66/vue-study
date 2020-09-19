@@ -1,11 +1,17 @@
 // 控制台输出语法：console.log([val]); //在控制台输出内容
 
+// 提示：请使用 isNaN() 来判断一个值是否是数字。原因是 NaN 与所有值都不相等，包括它自己。
 // == 用来进行比较的
 console.log('AA' == NaN); //false
 console.log(10 == NaN);  //false
 console.log(NaN == NaN); //false
 
-// 语法：isNaN([val])   //[val]参数占位符
+// 3. NaN == NaN 的结果是什么？为什么?
+// 答：NaN == NaN  的执行结果是 false。因为JavaScript规定，NaN表示的是非数字，但是这个非数字也是不同的，因此 NaN 不等于 NaN，两个NaN永远不可能相等。
+
+ 
+
+// 语法：isNaN([val])   //[val]参数占位符  isNaN用来检测是否为非有效数字
 console.log(isNaN(10)); //false  是有效数
 console.log(isNaN('qq')); //true 不是有效数字
 /* 
@@ -26,6 +32,13 @@ console.log(Number('12.5')); //=>12
 console.log(Number('12.5px')); //=>NaN
 console.log(Number('12.5.5')); //=>NaN
 console.log(Number('')); //=>0
+
+https://ask.csdn.net/questions/748225
+// 网上说法：
+// Number() = 0
+// Number('') = 0
+// Number([])=Number('')  = 0
+// 所以为0
 
 //布尔转为数字类型：true为1，false为0
 console.log(Number(true)); //1
@@ -52,7 +65,7 @@ console.log(Number([]));  //0
 console.log(Number([12])); //12
 //[12].toString() => "12"
 console.log(Number([12,23])); //NaN
-// [12,23].toString => "12,23"
+// [12,23].toString => "12,23"  =》console.log(Number("12,23")); =》 NaN
 
 //正则转为数字类型全部为NaN
 

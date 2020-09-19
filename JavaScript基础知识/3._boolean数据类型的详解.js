@@ -1,8 +1,11 @@
+// > 只有0、NaN、''、null、undefined五个值会转换为false,其余都转换为true(而且没有任何的特殊情况)
+
 console.log(Boolean(0));  //false
 console.log(Boolean('')); //false
-console.log(Boolean(' ')); //true
+console.log(Boolean(NaN)); //false
 console.log(Boolean(null));  //false
 console.log(Boolean(undefined)); //false
+console.log(Boolean(' ')); //true
 console.log(Boolean([])); //true
 console.log(Boolean({})); //true
 console.log(Boolean([12])); //true

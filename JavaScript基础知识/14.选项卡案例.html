@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选项卡案例</title>
+  <link rel="stylesheet" href="./14.tab.css" type="text/css">
+  <!-- <link ref="stylesheet" href="./14.tab.css"> -->
+</head>
+
+<body>
+  <div id="tabBox">
+    <ul id="navBox">
+      <li class="active">编程</li>
+      <!-- <li>编程</li> -->
+      <li>读书</li>
+      <li>运动</li>
+    </ul>
+    <div class="active">编程使我快乐</div>
+    <!-- <div >编程使我快乐</div> -->
+    <div>读书使我幸福</div>
+    <div>运动使我健康</div>
+  </div>
+</body>
+
+</html>
+<script>
+  //x想要操作谁，先获得谁
+  var tabBox = document.getElementById('tabBox'); //获得一个元素
+  var tabList = tabBox.getElementsByTagName('div'); //获得一个元素集合
+  var navBox = document.getElementById('navBox'); //
+  var navList = navBox.getElementsByTagName('li'); //获得一个li的集合
+
+  //这样写有问题
+  //循环三个li，给每一个li都绑定点击事件
+  // for (var i = 0; i < navList.length; i++) {
+  //   //  navList[i]:当前循环下我们要操作的那个li(i变量存储的值是我们需要获取指定元素的索引)
+  //   //  dir(navList); 获取的是元素集合
+  //   //  对象的操作 navList[1];
+  //   // i =0 => navList[0]
+  //   // i=1 =>navList[1]
+  //  navList[i].onclick = function () {
+  //     console.log(i);
+  //     // 每个li绑定事件
+  //     // 使用函数封装
+
+  //     // 我想要用的是点击这个li的索引，但是i不是
+  //     changeTab(i); //这是不行的
+  //   };
+  // }
+  /* 只有JS代码加载完成才能够看到页面， 只有看到页面用户才能够点击/*/
+
+//   // 解决方法一:自定义属性解决办法
+for(var i = 0; i<navList.length;i++){
+  // console.log(typeof navList[i]); //object
+  navList[i].myIndex = i;  //在循环给每一个li绑定点击事件的时候，我们给每一个li(元素对象)设置一个自定义属性myIndex，属性值存储的是当前li的索引
+  navList[i].onclick = function(){
+    console.log(this)
+    changeTab(this.myIndex);   //this是当前点击的元素li; this.myIndex获取的就是之前绑定在元素自定义属性上的索引值（navList[i].myIndex）
+  }
+}
+
+  // 解决方法二: 闭包解决方案
+  // for(var i = 0;i<navList.length;i++){
+  //   navList[i].onclick = (function(i){
+  //         return function(){
+  //           changeTab(i);
+  //         }
+  //   })(i);
+  // }
+
+  // // 解决方法三：es6中的let解决方案
+  // for(let i=0;i<navList.length;i++){
+  //   navList[i].onclick = function(){
+  //     changeTab(i);
+  //   }
+  // }
+
+
+  // f封装函数实现选项卡切换
+  // clickIndex:创建函数的时候，还不知道点击的是谁，所以定义一个入口clickIndex
+  // （clickIndex：存储点击这一项的索引，执行方法的时候把点击的这一项索引传递进来即可）
+  function changeTab(clickIndex) {
+    // 1.先让所有的li和div都没有选中的样式
+    for (var i = 0; i < navList.length; i++) {
+      navList[i].className = '';
+      tabList[i].className = '';  //两个li个书一样的
+    }
+      // 2.点击的是谁就给谁加选中的样式
+      // console.log(navList[clickIndex])
+
+      navList[clickIndex].className = 'active';
+      tabList[clickIndex].className = 'active';
+  }
+</script>

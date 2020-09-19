@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隔行变色</title>
+  <style>
+    *{
+      margin: 0;
+      padding:0;
+    }
+    ul{
+      margin: 0 auto;
+      width: 300px;
+      list-style:none;
+      border: 2px solid lightblue;
+    }
+    #newBox{
+      box-sizing: border-box;
+    }
+    #newBox li {
+      line-height: 50px;
+      border-bottom: 1px solid lightcoral;
+    }
+    /* 获取li的最后一行 */
+    #newBox li:nth-last-child(1){
+      /* //让最后一行的线条隐藏掉 */
+      border-bottom: none;
+    }
+
+    /* 基于CSS实现，真实项目也是css实现的 */
+          /* odd偶数行 even奇数行 */
+    /* #newBox li:nth-child(even){
+      background: lightblue;
+    }
+    #newBox li:hover{
+      background:rebeccapurple;
+    } */
+  </style>
+</head>
+<body>
+  <!-- ul#newBox>li*5{我是第$个li} -->
+   <ul id="newBox">
+     <li>我是第1个li</li>
+     <li>我是第2个li</li>
+     <li>我是第3个li</li>
+     <li>我是第4个li</li>
+     <li>我是第5个li</li>
+   </ul>
+   <script>
+    //  [context].getElementsByTagName([tagname]); 在指定的context范围内，通过标签名获取
+    //  一组元素（元素集合HTMLCollection）=>集合和数组很相似，也是以数字索引作为属性名，
+    // 有length属性存储长度，但是不是数组，属于"类数组""
+     let newsBox = document.getElementById('newBox');
+     let newsList = newsBox.getElementsByTagName('li');
+     console.dir(newsList);  //类数组
+      //通过索引就可以得到第几个li  newsList[0]  newsList[1]  键值对的操作
+
+      //1.循环索引获取的li,判断每一个li的奇偶行，让其有不同的背景颜色
+      for(let i=0;i<newsList.length;i++){  //i<newsList.length;有多少个li循环多少次
+        //一轮 i=0，操作第一个li newsList[0]
+        //第二轮 i=1 操作第二个li newsList[i]
+        //=> 总结：newsList[i]获取当前本来循环循环我们要操作的这个li
+        let curli = newsList[i];
+        //i=0(偶数) 第一个li奇数行
+        //i=0(奇数) 第二行li偶数行
+        // 总结规律：当前行的索引如果是偶数，那么它是奇数行，否则是偶数行
+        //偶数判断的标准：能被2整除（除以2的余数为0） n/2除法 =》 n/%2取余数
+        if( i%2 === 0 ){
+            curli.style.backgroundColor = '#FFF';
+        } else {
+          // 索引是奇数，代表偶数行
+          curli.style.backgroundColor = '#DDD';
+        }
+      }
+
+        // 1. 实现奇偶行变色
+      for(let i =0 ;i<newsList.length; i++){
+        let curli = newsList[i];
+              //三目元素
+        curli.style.background = i % 2 === 0 ?  '#FFF'  : '#DDD';
+        //  2.循环的时候给每一个li都绑定mouseover/mouseout 事件
+        curli.onmouseover = function() {
+            // this:代表当前操作的li
+            this.style.background = 'lightblue';
+        }
+        curli.onmouseout = function() {
+          // 思考题？如何在离开的时候知道原来的颜色
+            this.style.background = '#FFF';
+            curli.style.background = i % 2 === 0 ?  '#FFF'  : '#DDD';
+        }
+      }
+   </script>
+</body>
+</html>
+
+
+
+
+      <!-- let person = {
+          name: '加油学习',
+           1:99
+        };
+        
+        // console.log(person.1);  这种写法报错，为啥
+        console.log(person[1]);  要这样写才可以
+        
+      关联数组下标可以是 number string
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
