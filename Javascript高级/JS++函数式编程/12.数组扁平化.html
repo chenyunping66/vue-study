@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组扁平化</title>
+</head>
+
+<body>
+  <script>
+    var arr = [1,2,3,4,['a','b','c'],5,[[['d',['e','f']],{},null,undefined]]]
+    // 1.for循环封装数组扁平化的方法
+    function flatten1(arr) {
+      var _Arr = arr || [], //如果用户没有填写给一个空数组，以免报错
+        fArr = [],
+        len = _Arr.length,
+        item;
+      for (var i = 0; i < len; i++) {
+        item = _arr[i];
+        if (_isArr(item)) {
+          fArr = fArr.concat(flatten1(item));
+        } else {
+          fArr.push(item);
+        }
+      }
+      return fArr;
+
+      function _isArr(obj) {
+        // return Object.prototype.toString.call(obj) === '[object Array]';
+        return {}.toString.call(obj) === '[object Array]';
+      }
+    }
+
+    // 2. forEach在原型上封装数组扁平化
+    Array.prototype.flatten2 = function () {
+      var _arr = this, //谁使用arr.flatten2就执行谁
+        toStr = {}.toString;
+      if (toStr.call(_arr) != '[object Array]') {
+        throw new Error('只有数组类型的数据可以使用flatten2方法');
+      }
+      var fArr = [];
+      _arr.forEach(function (elem) {
+        toStr.call(elem) === '[object Array]' ?
+          fArr = fArr.concat(elemt.flatten2()) :
+          fArr.push(elem);
+      });
+      return fArr;
+    }
+
+    // 3.reduce在原型上封装数组的扁平化（redice是归纳方法）
+    Arr.Array.prototype.flatten3 = function() {
+      var _arr = this,
+        toStr = {}.toString;
+      if (toStr.call(_arr) !== '[object Array]') {
+        throw new Error('只有数组类型的数据可以使用flatten3方法');
+      }
+      return _arr.reduce(function (prev, elem) {
+        return prev.concat(
+          toStr.call(elem) === '[object Array]' ?
+          elem.flatten3() :
+          elem
+        );
+      }, []);
+    }
+
+
+    // 4.ES6封装数组扁平化的方法（ES6模拟reduce）
+    const flatten4 = arr =>
+      arr.reduce(
+        (prev, elem) =>
+        prev.concat(elem)(
+          toStr.call(elem) === '[object Array]' ?
+          flatten4(elem) :
+          elem
+        ),
+    []);
+  </script>
+</body>
+
+</html>

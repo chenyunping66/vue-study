@@ -1,0 +1,58 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-20 19:10:47
+ * @LastEditTime: 2020-09-20 20:43:42
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\08.DOM&DOM盒子模型\css3的盒子模型border-box.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS3的盒子模型</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      /* css3的盒子模型 */
+      box-sizing:border-box ;
+      margin: 20px auto;
+      padding: 15px;
+      width: 300px;
+      height: 300px;
+      border: 10px solid lightcoral;
+      background: lightblue;
+      font-size: 14px;
+      line-height: 35px;
+
+    }
+
+    p {
+      /* display: block;
+    max-width: 500px;
+    height: 400px;
+    line-height: 1.4;
+      display: -webkit-box;   必须结合的属性，将对象作为弹性伸缩盒子模型显示
+      white-space: nowrap;
+      -webkit-line-clamp: 3; 用来限制一个块元素限制的文本行数。为了实现该效果，还需要结合其他webkit属性
+      -webkit-box-orient: vertical;   必须结合的属性，设置或者检索伸缩盒子对象的子元素的排列方式
+      overflow: hidden;  
+      text-overflow: ellipsis; */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box" class="box">
+    获取元素的方法:1.document.getElementById([ID]) 获取元素ID2.[context].getElementsByClassName([CLASS-NAME])
+    通过类名获取元素（在IE6-8中不兼容）3.[context].getElementsByTagName([TAG-NAME]) 通过标签名获取元素
+  </div>
+</body>
+
+</html>

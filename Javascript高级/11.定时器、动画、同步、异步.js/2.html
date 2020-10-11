@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数的防抖和节流</title>
+  <!-- IMPORT CSS -->
+  <link rel="styesheet" href="../06商城排序案例/css/reset.min.css">
+  <style>
+    html,
+    body{
+      height: 500%;
+       /* //5屏幕 */
+       /* 为什么我的效果又出不来emmm。。。。。。 */
+       background: -webkit-linear-gradient(top,left,rgb(9, 181, 238),lightgreen,lightyellow,orange);
+       /* 线性渐变 */
+       /* background: -webkit-ratial-gradient(rgb(9, 181, 238),lightgreen,lightyellow,orange); */
+       /* 放射性渐变：从正中心向四周渐变 */
+
+    }
+  </style>
+</head>
+<body>
+  <script src="../../node_modules/underscore/underscore.js"></script>
+  <script src="./2.函数的防抖和节流.js"></script>
+  <script>
+    // window.onscroll = function(){
+    //   // console.log('ok');
+    //   //下拉加载更多数据的时候，鼠标滚轮从上到下拉到边界的时候，触发了很多次，每次触发都请求了很多次，每次我们请求的数据次数都很多次（真实项目中我们都是异步编程，监听符合条件后，你去请求数据，但是不管你，我继续往下滚动，相等于同时向服务器发送了很多次请求）：这些处理就是函数的防抖和节流：防止频繁的事情的时候
+    // }
+  </script>
+</body>
+</html>

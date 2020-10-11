@@ -1,0 +1,60 @@
+html,body{
+  background: #c7c7c7;
+  overflow-x: hidden;
+}
+.container{
+  box-sizing: border-box;
+  margin: 20px auto;
+  width: 1000px;
+  /* display: flex;   */
+  /* 让容器处于弹性伸缩 */
+  /* 基flex实现水平排列，里面的每一项都会保持相同的高度，其中某一项变高，其余所有的项也都跟着变高*/
+}
+.container .column{
+  box-sizing: border-box;
+  float: left;
+  margin-right: 12px;
+  /* margin-right: 20px; */
+  width: 320px;
+  /* 每一列高度自适应 */
+  /* overflow: hidden; */
+  /* background: red; */
+
+}
+.container .column:last-child(1){
+  margin-right: 0;  
+  /* //最后一列没有边距 */
+}
+
+
+.container .column .item{
+  /* a是行内标签没有宽高,只有块级标签才能够设置宽高 */
+  display:block;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  box-shadow: 3px 3px 10px #666;  
+  /* 向右，向下 阴影大小 阴影颜色 */
+}
+.container .column .item .imgBox{
+    /*  想要实现图片的延迟加载，这块显示默认占位图，事先需要知道图片的高度 */
+  /* 从服务器的数据中有图片高度，动态给img设置高度 */
+    /*height: 300px; */
+  /* 没有真实图片的情况下，默认有一个这样的背景图 */
+   background: url("../img/default.gif") no-repeat center center #EEE;
+   overflow: hidden;   /* //防止图片超出高度 */
+
+}
+.container .column .item .imgBox img{
+  /* 宽度自适应 */
+  width: 100%;  
+   display: none;
+}
+.container .column .item p{
+  margin-top: 10px;
+  font-size: 12px;
+  color: #555;
+  line-height: 20px;
+}
+
+/* https://huaban.com/.search/?q=Taylor+Swift */

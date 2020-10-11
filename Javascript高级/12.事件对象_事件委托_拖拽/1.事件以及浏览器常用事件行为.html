@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../11.定时器、动画、同步、异步.js/6.左右切换版轮播图/css/reset.min.css">
+  <style>
+    html,
+    body {
+      height: 100%;
+      background: lightblue;
+    }
+
+    #box {
+      box-sizing: border-box;
+      /* 居中 */
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -100px 0 0 -100px; 
+      /* //上 右下左 */
+      width: 200px;
+      height: 200px;
+      background: lightcoral;
+    }
+  </style>
+</head>
+
+<body>
+  <idv id="box"></idv>
+  <script>
+    /* 
+     * 事件是元素天生自带的默认行为
+     * 1.不论我们是否给其绑定了方法，当我们操作的时候，也会把对应的事件触发
+    */
+   //基于高德地图API实现车辆轨迹回放并显示实时坐标
+   //https://blog.csdn.net/u014240569/article/details/72724232?utm_medium=distribute.pc_relevant.none-task-blog-utm_term-6&spm=1001.2101.3001.4242
+    box.onclick = function(){
+      console.log('hahah');
+    }
+  </script>
+</body>
+
+</html>

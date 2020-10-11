@@ -1,0 +1,96 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-20 19:10:47
+ * @LastEditTime: 2020-09-20 23:39:25
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\08.DOM&DOM盒子模型\css3的盒子模型border-box.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS3的盒子模型</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      height: 100%;  
+      /* 让整个页面高度就是一屏高 */
+    }
+    .box {
+      /* css3的盒子模型 */
+      box-sizing:border-box ;
+      /* margin: 20px auto; */
+      padding: 15px;
+      width: 300px;
+      height: 300px;
+      border: 10px solid lightcoral;
+      background: lightblue;
+      font-size: 14px;
+      line-height: 35px;
+
+    }
+/* 居中：定位 */
+/* 方案一：知道固定宽高的情况下，使用css实现居中 */
+/* //  position: absolute;  相对于整个body来定位 */
+/* .box{
+  position: absolute;  
+  top:50%;
+  left:50%;
+  margin-left: -150px;
+  margin-top: -150px;
+} */
+
+/* 方案二：不知道宽高的情况下，基于css3变形属性中的位移,在不知道宽高的情况下，也能够实现效果 */
+/* transform: translate(-50%,-50%); x轴往左走一半,y轴往上走一半 */
+/* .box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+} */
+
+/* 方案三：不知道宽高的情况下，这种方式不兼容,四个方向都设置为0，再将margin设置为居中 */
+/* .box{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+} */
+
+/* 方案四：flex弹性收缩盒模型布局，设置html,body为overflow:hidden */
+  /* 设置元素在flex容器主轴和交叉轴方向上的对齐方式，center居中对齐,详见阮一峰的博客 */
+/* body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+   */
+  </style>
+</head>
+
+<body>
+  <div id="box" class="box">
+    获取元素的方法:1.document.getElementById([ID]) 获取元素ID2.[context].getElementsByClassName([CLASS-NAME])
+    通过类名获取元素（在IE6-8中不兼容）3.[context].getElementsByTagName([TAG-NAME]) 通过标签名获取元素
+  </div>
+  <script>
+    /*方案五： JS实现居中：（一屏幕的宽度-盒子的宽度）/2 === left */
+    let winW = document.documentElement.clientWidth,
+        winH = document.documentElement.clientHeight,
+        box = document.getElementById('box');
+    box.style.position = 'absolute';
+    box.style.left = (winW-300)/2 + 'px';
+    box.style.top = (winH-300)/2 + 'px';
+    
+  </script>
+</body>
+
+</html>

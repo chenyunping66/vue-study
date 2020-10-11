@@ -1,0 +1,107 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-28 15:14:57
+ * @LastEditTime: 2020-09-28 23:14:31
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\JS++函数式编程\4.函数组合.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数组合</title>
+</head>
+
+<body>
+  <!-- 函数组合=>饲养函数：compose -->
+  <!-- 若干个纯函数，偏函数，柯里化函数组合成一个新的函数，形成数据的传递，并实现一种有序执行的效果 -->
+
+  <script>
+    function toUpperCase(str) {
+      return str.toUpperCase();
+    }
+
+    function exclaim(str) {
+      return str + '!'
+    }
+
+    function split(str) {
+      return str.split('');
+    }
+
+    function reverse(str) {
+      return str.reverse();
+    }
+
+    function join(str) {
+      return str.join('-');
+    }
+    //  exclaim(exclaim(toUpperCase('hello')));  //"HELLO!!"
+
+    // 使用组合函数
+    function compose(fn1, fn2) { //给compose传递两个函数作为它的参数
+      return function (x) { //返回一个新的函数包裹它
+        return fn1(fn2(x)); //不立即执行fn1函数，所以return,
+        //fn1(fn2(x))这种方式叫做自右向左执行（左倾方式，函数的参数里面再执行一个函数（先传参数，再执行另外一个函数，fn2执行出来的结果再传递给fn1，让fn1再执行））
+      }
+    }
+    var f = compose(exclaim, toUpperCase); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    console.log(f('hello'));
+    // x是通过f,g之间的"管道"传输值
+
+    function compose1() {
+      var args = Array.prototype.slice.call(arguments); //将类数组变为数组,让它具备数组的方法
+      len = args.length - 1; //得到最后一位实参
+      return function (x) {
+        var res = args[len](x); //return f(g(x)); =>g(X)
+        while (len--) {
+          res = args[len](res); // f(g(x))
+        }
+        return res;
+      }
+    }
+    var f = compose1(exclaim, join, reverse, split, toUpperCase); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    console.log(f('hello')); //O-L-L-E-H!
+
+
+    /* 封装函数组合 */
+    // reduce(function(prev,cur,index,arr){},initialValue);
+    //reduceRight() 从后向左
+    function compose2() {
+      var args = Array.prototype.slice.call(arguments);
+      // prev：x  cur:(exclaim,join,reverse,split,toUpperCase)
+      return function (x) {
+        return args.reduceRight(function (prev, cur) {
+          return cur(prev);
+        }, x); //x:initialValue
+      }
+    }
+    var f = compose2(exclaim, join, reverse, split, toUpperCase); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    console.log(f('hello')); //O-L-L-E-H!
+
+    /* 结合律 ：在组合函数的参数中再进行分组组合得出来的结果和原来的函数组合所得出的结果都是一样的（结果不会受影响）*/
+    var f = compose2(join, reverse, split); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    var f1 = compose2(compose2(join, reverse), split); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    var f2 = compose2(join,compose2( reverse, split)); //先转大写，再加叹号。从右向左执行的一个数据流，一步一步把数据传递出去（可以理解为结果数据的生产线）
+    console.log(f('hello')); //o-l-l-e-h
+    console.log(f1('hello')); //o-l-l-e-h
+    console.log(f2('hello'));  //o-l-l-e-h
+
+    /* pointfree: "无值"风格。*/
+    // Pointfree 的本质就是使用一些通用的函数，组合出各种复杂运算。
+    // 上层运算不要直接操作数据，而是通过底层函数去处理。
+    // 这就要求，将一些常用的操作封装成函数。http://www.ruanyifeng.com/blog/2017/03/pointfree.html
+    //Love means never having to say you`re sorry. (爱意味着从不需要去说抱歉)
+    // Excuse me.(你在开玩笑吗（抱歉）)英语的语境
+    //Pointfree style means never having to say you data.
+    var f = compose2(exclaim, join, reverse, split, toUpperCase); 
+    console.log(f('hello')); 
+   
+
+  </script>
+</body>
+
+</html>

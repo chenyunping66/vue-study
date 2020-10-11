@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面向对象与函数式编程的关系</title>
+</head>
+
+<body>
+  <div class="J_text">123</div>
+  <button class="J_btn">点击</button>
+  <script>
+    // 面向对象与函数式编程的关系：
+    // 复杂的this call bind applay 它们都有自己的弊端，不能改解决的东西，所以有时候就需要函数来处理
+
+    //一个面向对象的例子
+    function Test() {
+      this.oBtn = document.getElementsByClassName('J_btn')[0];
+      this.oText = document.getElementsByClassName('J_text')[0];
+      this.content = '456';
+    }
+    Test.prototype = {
+      init: function () {
+        this.bindEvent();
+      },
+      bindEvent: function () {
+        this.oBtn.addEventListener('click', this.textChange.bind(this), false);
+      },
+      textChange: function () {
+        var content = this.content,
+          text = this.oText;
+        text.innerHTML = content;
+        console.log(this);
+      }
+
+    }
+    new Test().init();
+
+    // 函数式编程：
+    // 优点： 易读， 易维护
+    // 概念： 函数是第一类对象， 不依赖任何其他对象独立存在
+
+    function Test() {
+      this.add = function () {
+        //依赖的外面东西
+      }
+    }
+
+    var obj = {
+      //obj 
+      add: function () {
+        //这个就不是函数式编程了
+        // 对象才有正在的proto 构造函数只有原型属性
+      }
+    }
+
+    //  保存函数的方式：（函数无处不在）===========================
+    function test() {
+      //  1.全局作用域声明函数
+      function a() {
+        // 2.函数内部声明函数
+      }
+    }
+
+    // 3.在数组里面保存函数：
+    var arr = [function () {}, function () {}]
+
+    //4.在对象里面保存函数
+    var obj = function () {
+      //5.函数作为参数保存函数
+      test: function (function (params) {}) {}
+    };
+
+    //6.变量:表达式保存函数
+    vat test2 = function () {}
+
+  </script>
+</body>
+
+</html>

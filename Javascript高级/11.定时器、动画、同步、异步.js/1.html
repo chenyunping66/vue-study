@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="button" value="暂停" id="handleTimer">
+  <script>
+    let handleTimer = document.getElementById('handleTimer'),
+    timer = null;
+    count = 0;  ///操作的是全局的count.所有暂停重新开始之后，就又从接下来的值开始了
+
+    function createTimer() {
+      timer = setInterval(() => {
+        count++;
+        console.log(count);
+      }, 1000)
+    }
+    createTimer();
+    handleTimer.onclick = function () {
+      if (timer) {
+        //=> 如果timer存在就说明有定时器在执行，我们让其暂停(清理定时器)
+        clearInterval(timer);
+        timer = null; //说明没有定时器了，清除定时器后，记得把timer设置为Null
+        handleTimer.value = "开始";
+        return;  //清除定时器返回
+      }
+    //timer不存在：创建新的定时器
+      createTimer();
+      handleTimer.value = "暂停";
+    }
+    // function createTimer(){
+    //   timer = setInterval(()=>{
+    //     count++;
+    //     console.log(count);
+    //   },1000);
+    // }
+    // createTimer();
+    // handleTimer.onclick = function(){
+    //   clearInterval(timer);
+    //   handleTimer.value = "开始";
+    //   createTimer();
+    // }
+  </script>
+</body>
+
+</html>

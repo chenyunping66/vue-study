@@ -1,0 +1,257 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-27 08:18:48
+ * @LastEditTime: 2020-09-27 16:28:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\11.定时器、动画、同步、异步.js\5.JS定时器动画的实现.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定时器动画</title>
+  <link href="./01.瀑布流案例/css/reset.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .imgBox {
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 100px;
+      border: 1px solid red;
+      /* 设置过渡动画 */
+      /* transition: 1s;  */
+    }
+  </style>
+</head>
+
+<body>
+  <img src="./01.瀑布流案例/img/2.jpg" alt="" class="imgBox">
+
+  <!-- IMPORT JS -->
+  <!-- 定时器动画 -->
+  <script>
+    /* 定时器动画：限定步长 */
+    // let imgBox = document.querySelector('.imgBox'),
+    //   //target目标样式
+    //   // box.clientHeight; //（内容高度+上下padding）可视区域的高度
+    //   // offsetHeight: 正文高度
+    //   target = document.documentElement.clientWidth - imgBox.offsetHeight, //减去盒子高度
+    //   //step:步长
+    //   step = 6;
+    // //设置定时器，让其每间隔17毫秒走一步（改变left/transform:translateX）
+    // let timer = setInterval(() => {
+    //   // 每间隔多少毫秒走多少次
+    //   // 1.获取当前盒子的位置,在现有的位置加上step
+    //   let curL =parseFloat(window.getComputedStyle(imgBox).left);  //"0px"
+    //         //3.到达边界之后，停止
+    //       if(curL+ step >= target){
+    //         //到达边界(边界判断是在当前位置在基础上加上步长去验证的)
+    //         imgBox.style.left = target+'px';
+    //         clearInterval(timer);
+    //         timer = null;
+    //         return;
+    //       }
+    //    curL += step;
+    //   // 2.重新给元素设置样式
+    //   imgBox.style.left = curL + 'px';
+    //   //3.到达边界之后，停止
+    // }, 17);
+  </script>
+  <script>
+    /* 写的还是有问题 */
+    /* 定时器动画：限定时间的匀速运动
+     *     T：Time 当前已经运动的时间
+     *     B：begin 开始位置
+     *     D: duration 总时间
+     *     C: change 总距离
+     *  当前位置 = T/D*C+B
+     */
+
+    //   let imgBox = document.querySelector('.imgBox'),
+    //     //=> target 目标位置
+    //     target = document.documentElement.clientWidth - imgBox.offsetHeight,
+    //     //=> begin 起始位置
+    //     begin = parseFloat(window.getComputedStyle(imgBox).left),
+    //     //=> change 总距离
+    //     change = target - begin;
+    //     // =>duration 总时间
+    //     duration = 1000; //总时间
+    //     //=> time 已经运动的时间
+    //     time =0;
+
+    //     let  timer = setInterval(()=>{
+    //       time += 17;
+    //       // 边界判断
+    //       if(time>=duration){
+    //         imgBox.style.left = target+'px';
+    //         clearInterval(timer);
+    //         timer = null;
+    //         return;
+    //       }
+    //       let curL = time/duration*change+begin;
+    //       imgBox.style.left = curL+'px';
+    //     },17);
+
+    //     // https://blog.csdn.net/vhwfr2u02q/article/details/79492303
+    //     // 深入理解 requestAnimationFrame
+  </script>
+
+  <script>
+    /* window.requestAnimationFrame: JS中比定时器动画更好的方式（HTML5中提供的） */
+    // let imgBox = document.querySelector('.imgBox'),
+    //   //=> target 目标位置
+    //   target = document.documentElement.clientWidth - imgBox.offsetHeight,
+    //   //=> begin 起始位置
+    //   begin = parseFloat(window.getComputedStyle(imgBox).left),
+    //   //=> change 总距离
+    //   change = target - begin;
+    // // =>duration 总时间
+    // duration = 1000; //总时间
+    // //=> time 已经运动的时间
+    // time = 0;
+
+    // function render() {
+    //   time += 16.7;
+    //   // 边界判断
+    //   if (time >= duration) {
+    //     imgBox.style.left = target + 'px';
+    //     clearInterval(timer);
+    //     timer = null;
+    //     return;
+    //   }
+    //   let curL = time / duration * change + begin;
+    //   imgBox.style.left = curL + 'px';
+    // }
+    // window.requestAnimationFrame(render);
+    // 未完成
+  </script>
+
+  <!-- /* CSS3动画实现 */ -->
+  <script>
+    // let imgBox = document.querySelector('.imgBox'),
+    //     targetL = document.documentElement.clientWidth - imgBox.offsetWidth,
+    //     targetT = document.documentElement.clientHeight - imgBox.offsetHeight;
+    // // imgBox.style.transform = `translateX(${targetL}px)`;  x轴运动
+    // // imgBox.style.left = target+'px';
+    // imgBox.style.transform = `translate(${targetL}px,${targetT}px)`;   //左下角运动
+  </script>
+
+  <!-- 多方向，规定时间，匀速动画 -->
+  <script>
+    // let imgBox = document.querySelector('.imgBox'),
+    //   targetL = document.documentElement.clientWidth - imgBox.offsetWidth,
+    //   targetT = document.documentElement.clientHeight - imgBox.offsetHeight;
+
+    // /* 
+    //  * animate: 封装一个简单的动画库(练习库的封装)
+    //  *    @params
+    //  *       curele:当前要运动的元素
+    //  *       target: 目标值 对象:{left:xxx,top:xxx}
+    //  *       duration: 总时间
+    //  *       callback: 回调函数，动画完成后要做什么事
+    //  */
+    // function animate(curEle, target = {}, duration = 1000, callback) {
+    //   //=> 准备T/B/C/D
+    //   let time = 0,
+    //     begin = {},
+    //     change = {};
+    //     for (let key in target) {
+    //       begin[key] = parseFloat(getComputedStyle(curEle)[key]);
+    //       change[key] = target[key] - begin[key];
+    //     }
+    //   //设置定时器开始运动
+    //   let timer = setInterval(() => {
+    //     time += 16.7;
+    //     //=> 边界
+    //     if (time >= duration) {
+    //       clearInterval(timer);
+    //       timer = null;
+    //       for (let key in target) {
+    //         curEle['style'][key] = target[key] + 'px';
+    //       }
+    //       //=》 运动完执行回调函数
+    //       callback && callback();  //=> 如果存在让callback()执行，逻辑与左边为真，让右边执行，
+    //       // 相当于 typeof callback = "function" ?callback() : null;  柯里化函数思想的时候学过回调函数
+    //       return;
+    //     }
+    //     //获取当前方向的样式值
+    //     for (let key in target) {
+    //       let cur = time / duration * change[key] + begin[key];
+    //       curEle['style'][key] = cur + 'px';
+    //     }
+    //   }, 16.7);
+    // }
+    // animate(imgBox, {
+    //   left: targetL,
+    //   top: targetT
+    // },2000,()=>{
+    //   imgBox.style.transform = "rotate(180deg)"
+    // });
+
+    //没有封装之前的代码
+    // let time = 0,
+    //   duration = 1000,
+    //   beginL = 0,
+    //   beginT = 0,
+    //   changeL = targetL - beginL,
+    //   changeT = targetT - beginT;
+    // let timer = setInterval(() => {
+    //   time += 16.7;
+    //   if (time >= duration) {
+    //     imgBox.style.left = targetL + 'px';
+    //     imgBox.style.top = targetT + 'px';
+    //     clearInterval(timer);
+    //     timer = null;
+    //     return;
+    //   }
+    //   let curL = time / duration * changeL + beginL,
+    //     curlT = time / duration * changeT + beginT;
+    //   imgBox.style.left = curL + 'px';
+    //   imgBox.style.top = curlT + 'px';
+    // }, 16.7);
+  </script>
+
+
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<!-- /* JQ */ -->
+  <script>
+    /* 
+    * animate:JQ中实现的动画库（目标样式，运动时间，运动方式，运动完成执行的函数）
+    *   语法： $元素.animate(目标样式，运动时间，运动方式，运动完成执行的函数)
+    * stop:结束当前正在运行的动画，从现有的位置开始继续新的动画
+    * finish: 也是结束当前正在运行的动画，和stop的区别是：finish是结束后快速运动到动画的结束位置，在开启新的动画
+    * 
+    * 快捷动画：
+    *   show/hide/toggle 显示/隐藏/显示隐藏切换
+    *   fadeIn/fadeOut/fadeToggle 淡入淡出（渐隐渐现）
+    *  slideDown/slideUp/slideToggle 下拉和卷起
+    */
+    let $imgBox = $('.imgBox'),
+        $window = $(window),
+        targetL = $window.outerWidth()-$imgBox.outerWidth(),
+        targetT = $window.outerHeight()-$imgBox.outerHeight();
+    $imgBox.click(function(){
+      // $this
+      // $imgBox.hide(3000); //逐渐隐藏 //=》 "slow" "fase"/具体时间
+      // $imgBox.fadeOut(1000);  //
+      $imgBox.slideUp(1000);  //这些所以的方法都是基于animate扩展出来的方法
+
+    })
+    // $imgBox.stop().animate({
+    //   top:targetT,
+    //   left:targetL
+    // },2000,'linear',()=>{
+    //     $imgBox.css('transform','rotate(180deg)');
+    // })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片的延迟加载</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .imgBox{
+      /* 当图片出现在视野当中加载出来 */
+      margin: 1000px auto;  
+      width:520px;
+      height:280px;
+      overflow: hidden;
+      background: #bbbbbb;
+    }
+    .imgBox img{
+      display: none;
+      width: 100%;
+      /* min-height: 100%; */
+    }
+  </style>
+</head>
+<body>
+   <div class="imgBox">
+     <img  src="" alt=""
+     data-img="https://img.alicdn.com/simba/img/TB17jmuemslXu8jSZFuSutg7FXa.jpg">
+     
+   </div>
+
+   <!-- IMPORT JS -->
+   <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+   <script>
+     //单张图片处理
+      let $imgBox = $('.imgBox'),
+          $img = $imgBox.children('img');
+          $window = $(window);  //创建一次存起来，减少消耗性能
+      // $(document).ready();  //只要DOM结构加载完才会加载
+      // $(window).on（'load scroll'）  //等待所有资源加载完成后才开始加载
+      //=> JQ中的事件绑定支持多事件绑定：window.onload & window.onscroll两个事件触发的时候执行相同的事情
+      $(window).on('load scroll',function(){
+        // window.onload/onscroll 页面中所有资源加载完成后执行/当浏览器滚动条滚动的时候，触发这个事件执行
+        // console.log('OK');
+        // offsetHight ===> JQ的outerHeight
+        if($img.attr('isLoad')==='true') {
+          //之前加载过，则不会重新加载
+          return;
+        }
+        //没有加载过继续执行
+        let $A = $imgBox.outerHeight() + $imgBox.offset().top,   //图片区域高度+图片距离body的上偏移
+            $B = $window.outerHeight()+$window.scrollTop();  //浏览器可是区域的高度（一屏高度）+滚动条卷去的高度
+        if($A<=$B){
+            //=> 加载真实图片
+            $img.attr('src',$img.attr('data-img'));
+            $img.on('load',function(){
+              //=> 加载成功
+              // $img.css('display','block');
+              //fadeIn()  JQ中的渐现动画。慢慢呈现出来
+              $img.stop().fadeIn();
+             });
+            $img.attr('isLoad',true); //=> attr存储的自定义属性值都是字符串格式"true""
+        }
+      })
+   </script>
+</body>
+</html>

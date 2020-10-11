@@ -1,0 +1,114 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-28 22:09:13
+ * @LastEditTime: 2020-09-29 00:09:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\JS++函数式编程\5.结合律.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数柯里化</title>
+  <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+  <!-- //高阶函数:一个函数的参数，含有一个函数（一个函数的参数还有一个函数） -->
+  <script>
+    function test(a, b, pow) {
+      return pow(a, 2) + pow(b, 2);
+    }
+
+    function pow(x, n) {
+      return Math.pow(x, n);
+    }
+    var res = test(2, 3, pow);
+
+    // JS函数实际上都是指向某一个变量
+    var test = function (a, b) {}
+
+    function test() {}
+
+    // test指向一个函数，
+    // 那么函数参数一定能够接收一个变量
+    // 函数的参数能够接收变量，那么一个函数就可以接收另一个函数作为变量
+    // 所以一个函数接收另一个函数作为参数变量的这个函数就是高阶函数
+    var arr = [1, 2, 3, 4, 5];
+    //通过map给每一个元素加上一个1
+    // function addOne(elem){
+    //   return elem +1;
+    // }
+    // var newArr = arr.map(addOne);
+    // 相当于：
+    var newArr = arr.map(
+      function addOne(elem) {
+        return elem + 1;
+      });
+
+    // map()数据处理函数，它就是一个高阶函数
+    // reduce() 归纳函数（满足我条件的东西我把它归纳到自己的函数中去）
+    function setData(initVal, elem) {
+      if (elem > 3) {
+        initVal.push(elem);
+      }
+      return initVal;
+    }
+    // var newArr = arr.reduce(setData,[]); // [4, 5] [4, 5]
+    //遍历的数组扩展方法，相当自动取调用后面的回调函数的，所以函数名没有必要
+    var newArr = arr.reduce(function setData(initVal, elem) {
+      if (elem > 3) {
+        initVal.push(elem);
+      }
+      return initVal;
+    }, []); // [4, 5] [4, 5]
+
+    // 总结：数组的扩展方法都是高阶函数：计时器，sort,replace
+    // 高阶函数的好处：
+    // 便于扩展（1.抽象功能，扩展功能，单独的维护，2.可以完成一个方法执行完毕以后的回调函数），
+    // 易于维护（回调函数是再方法执行的时候调用的）
+
+    //抽象函数不一定是完全独立的函数体，相互依赖的程序体
+
+    $('xxx').animate({
+      width:'100px' //第一个参数是一个对象
+    },300,function(){
+      // 第二个参数：是动画所执行的时间
+      // 第三个参数：是一个回调函数，在执行完毕后所要做的事情
+    })
+
+    var test1 = function(a,b,fn){
+      return fn(a,b);
+    }
+    // var res = test1(1,2,test2);  //没有必要
+    function test2(a,b){
+      return a+b;
+    }
+    res = test2(1,2);  //高阶函数不是什么地方都可以乱用的，浪费资源
+
+    //案例：
+    var test = function(fn){
+      return doSth(function(data){
+        return fn(data); //返回值一遍又一遍的返回，这样有时候是没有必要的
+      });
+    }
+    function doSth(fn){
+      fn();
+    }
+
+    //简写：从里往外分析
+    fn(data)-> function(data){return fn(data)}()
+    var test = function(fn){
+      return doSth(fn(data));
+    }
+    var test = function(fn){
+      fn(data);
+    }
+    var test = fn(data); // 最终简化版
+  </script>
+</body>
+
+</html>

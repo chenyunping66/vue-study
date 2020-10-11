@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>渐隐渐现版轮播图</title>
+	<!-- IMPORT CSS -->
+	<link rel="stylesheet" href="css/reset.min.css">
+	<link rel="stylesheet" href="css/banner.css">
+</head>
+<!-- 
+	插件组件封装的一点思想：
+	1. 基于面向对象的方式来处理
+	  =>调取一次插件相当于创建插件的一个实例
+	  =>这样私有的可以设置，公有的方法也可以设置
+	2. 我们要保证几个事情
+	  =>灵活且功能强大（适配更多的应用场景）
+	  =>容错性和可扩展性要强
+	  =>追求极致的性能和优秀的代码管理方式
+	  =>开源精神
+ -->
+
+<body>
+	<section class="container" id="container1">
+		<!-- 轮播图容器 -->
+		<div class="wrapper"></div>
+		<!-- 分页器容器 -->
+		<div class="pagination"></div>
+	</section>
+
+	<section class="container" id="container2">
+		<!-- 轮播图容器 -->
+		<div class="wrapper"></div>
+		<!-- 前进后退按钮 -->
+		<a href="javascript:;" class="button-prev"></a>
+		<a href="javascript:;" class="button-next"></a>
+	</section>
+
+	<!-- IMPORT JS -->
+	<!-- <script src="js/jquery.min.js"></script>
+	<script src="js/banner-plugin-jquery.js"></script>
+	<script src="js/banner.js"></script> -->
+
+	<script src="./插件封装/js/jquery.min.js"></script>
+	<script src="./插件封装/js/banner-plugin.min.js"></script>
+	<script src="./插件封装/js/banner.js"></script>
+</body>
+
+</html>

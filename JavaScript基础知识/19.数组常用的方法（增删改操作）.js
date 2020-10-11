@@ -133,7 +133,7 @@ ary.length--;  // 相当于ary.length = ary.length-1
 console.log(ary); //[10, 20,length:2]
 
 
-// +++++++++++++++++++++++++++++++++ splice 实现数组的增加删除和修改
+// +++++++++++++++++++++++++++++++++ splice 实现数组的增加、删除和修改
 /* 
 *  splice
 *    splice: 实现数组的删除
@@ -182,8 +182,6 @@ console.log(ary);  // [10, "哈哈哈", "学习", "AAA"]
 // 向数组前面追加
 ary.splice(0,0,'放前面');
 console.log(ary);  //  ["放前面", 10, "哈哈哈", "学习", "AAA"]
-
-
 
 
 

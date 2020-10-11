@@ -1,0 +1,133 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-21 08:47:06
+ * @LastEditTime: 2020-09-21 09:52:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\09.JQUERY学习\14.选项卡案例 copy.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选项卡案例</title>
+  <link rel="stylesheet" href="./14.tab copy.css" type="text/css">
+  <!-- <link ref="stylesheet" href="./14.tab.css"> -->
+<script>
+  // // 在结构加载之前获取元素肯定获取不到，我们一般把JS放到body末尾（就是为了等待结构加载完成再去获取元素）
+  // let tabBox = document.getElementById('tabBox');
+  // console.log(tabBox);  //null
+  //1.如果不需要获取页面中的元素，放到哪儿都可以
+  //2.就是想放到开头，还想获取元素，可以基于window.onload或者JQ中的$(document).ready()来处理
+</script>
+</head>
+
+<body>
+  <div class="tabBox">
+    <ul class="navBox">
+      <li class="active">编程</li>
+      <!-- <li>编程</li> -->
+      <li>读书</li>
+      <li>运动</li>
+    </ul>
+    <div class="active">编程使我快乐</div>
+    <!-- <div >编程使我快乐</div> -->
+    <div>读书使我幸福</div>
+    <div>运动使我健康</div>
+  </div>
+</body>
+
+</html>
+<!-- 重构选项卡案例 -->
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script>
+  $('.tabBox>.navBox>li').click(function(){
+    let n = $(this).index();
+    $(this).addClass('active')  // 点击某一项，增加样式。先把当前这一项增加
+           .siblings().removeClass('active')  //再找兄弟，移除
+           .parent()  //找父亲
+           .nextAll('div').eq(n).addClass('active')  //再找父亲下的根div,添加
+           .siblings().removeClass('active'); //再移除
+  });
+</script>
+<script>
+  /* 
+  * $([function]):等待页面中所有的DOM结构加载完成后才会执行这个给方法，它也是一个闭包
+  * =》 $(document).ready([function])  加载的时候比window.onload快
+  *
+  *  window.onload = function(){}; 等待页面中所有的资源（DOM、内容、其他的富媒体资源等）都加载完成才执行函数
+   */
+  // $(function(){
+  //   //=> 选项卡正常思路：点击给所有的li绑定点击事件,当点击某一个li的时候，让其有选中样式，而其余的li都移除选中样式。
+  //   // 同时，对应索引的div有选中样式，其余的div移除选中样式即可，这样就可以实现选项卡切换效果
+  //  let $tabBox = $('#tabBox');
+  //      $navList = $tabBox.find('#navBox>li'); //=> $('#tabBox #navBox li')  /  $('#navBox>li',#tabBox)
+  //      $divList = $tabBox.children('div');
+  //   console.log($navList);
+  //   //JQ特性1：内置循环处理机制（基于JQ集合去操作某个方法，我们无需循环每一项单独操作，JQ内部我们循环处理了，
+  //   // 例：$navList.css('color','#000')集合中有100项，JQ会把100项都设置了这个样式，无需自己循环处理）
+  //   $navList.on('click',function(){
+  //      //=》 this:当前点击操作的元素 =》 $(this)此能调用JQ方法
+  //     //  $(this).addClass('active');
+  //     //  $(this).siblings();
+  //     //JQ特性2：链式写法
+  //     let n = $(this).index(); //获取当前点击元素的索引
+  //     $(this).addClass('active').siblings().removeClass('active');  //链式写法
+  //    //根据点击li的索引在DIV集合中找到对应的哪一项，然后这一项中，它的兄弟项都移除选中即可
+  //    $divList.eq(n).addClass('active').siblings().removeClass('active'); 
+  //   })
+
+    //=> 基于JQ中的each遍历集合中的每一项,绑定点击事件
+    // $navList.each(function(index,$item){
+    //   //参数顺序和内置的forEach方法是反的
+    //   //index:当前循环这一项的索引
+    //   //item:当前循环的这一项
+    //   //this===$item 当前方法中的this也是循环的这一项
+    //   $item.on('click',function(){
+        
+    //   })
+    // });
+    // $navList.each((index,$item)=>{
+    //    //this不再是循环的每一项（箭头函数没有this）
+    //    //this是所属上下文中的this
+    // })
+  // });
+</script>
+<script>
+  //x想要操作谁，先获得谁
+//   var tabBox = document.getElementById('tabBox'); //获得一个元素
+//   var tabList = tabBox.getElementsByTagName('div'); //获得一个元素集合
+//   var navBox = document.getElementById('navBox'); //
+//   var navList = navBox.getElementsByTagName('li'); //获得一个li的集合
+
+
+// //   // 解决方法一:自定义属性解决办法
+// for(var i = 0; i<navList.length;i++){
+//   // console.log(typeof navList[i]); //object
+//   navList[i].myIndex = i;  //在循环给每一个li绑定点击事件的时候，我们给每一个li(元素对象)设置一个自定义属性myIndex，属性值存储的是当前li的索引
+//   navList[i].onclick = function(){
+//     console.log(this)
+//     changeTab(this.myIndex);   //this是当前点击的元素li; this.myIndex获取的就是之前绑定在元素自定义属性上的索引值（navList[i].myIndex）
+//   }
+// }
+
+
+//   // f封装函数实现选项卡切换
+//   // clickIndex:创建函数的时候，还不知道点击的是谁，所以定义一个入口clickIndex
+//   // （clickIndex：存储点击这一项的索引，执行方法的时候把点击的这一项索引传递进来即可）
+//   // function changeTab(clickIndex) {
+//     var changeTab = function(n){
+//     // 1.先让所有的li和div都没有选中的样式
+//     for (var i = 0; i < navList.length; i++) {
+//       navList[i].className = '';
+//       tabList[i].className = '';  //两个li个书一样的
+//     }
+//       // 2.点击的是谁就给谁加选中的样式
+//       // console.log(navList[clickIndex])
+
+//       navList[n].className = 'active';
+//       tabList[n].className = 'active';
+//   }
+</script>

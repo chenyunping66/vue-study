@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片的延迟加载</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .container{
+      margin: 0 auto;
+      width: 800px;
+    }
+    .imgBox{
+      /* 当图片出现在视野当中加载出来 */
+      /* margin: 1000px auto;   */
+      /* width:520px; */
+      margin-bottom: 20px;
+      height:280px;
+      overflow: hidden;
+      background: #bbbbbb;
+    }
+    .imgBox img{
+      display: none;
+      width: 100%;
+      /* min-height: 100%; */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+   <!-- <div class="imgBox">
+     <img  src="" alt=""
+     data-img="https://img.alicdn.com/simba/img/TB17jmuemslXu8jSZFuSutg7FXa.jpg">   
+   </div> -->
+  </div>
+   <!-- IMPORT JS -->
+   <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+   <script>
+    //多张图片赖加载
+    let $container= $('.container'),
+        $imgBoxs = null, //数据绑定成功之后才会获得这个值
+        $window = $(window);
+   //1.假数据
+   let str = ``;
+   //创建而是项的空数组  fill填充的内容
+   //从零开始小于二十次的空的循环
+   // new Array(20).fill(null) 创建长度为二十的数组，每一项用null填充
+   new Array(20).fill(null).forEach(item=>{
+       str += `<div class="imgBox">
+     <img  src="" alt=""
+     data-img="https://img.alicdn.com/simba/img/TB17jmuemslXu8jSZFuSutg7FXa.jpg">   
+   </div>`;
+   });
+   $container.html(str);
+   $imgBoxs = $container.children('.imgBox');
+   //=》 多张图片延迟加载
+   $window.on('load scroll',function(){
+     //$B获取浏览器底边框距离body的距离
+     let  $B = $window.outerHeight()+$window.scrollTop();  //浏览器可是区域的高度（一屏高度）+滚动条卷去的高度
+     //循环每一个图片区域，根据自己区域距离body的距离，计算出里面的图片是否加载
+     $imgBoxs.each((index,item)=>{
+       let $item = $(item),
+           $itemA = $item.outerHeight() + $item.offset().top,
+           isLoad = $item.attr('isLoad');
+           console.log(isLoad)
+       if($itemA<=$B && isLoad !== 'true'){
+          $item.attr('isLoad',true);
+         //=》 加载当前区域中的图片
+         let $img = $item.children('img');
+         $img.attr('src',$img.attr('data-img'));
+         $img.on('load',()=>$img.stop().fadeIn());
+
+       }
+     });
+   })
+   </script>
+</body>
+</html>

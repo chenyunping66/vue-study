@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数记忆与函数防抖</title>
+</head>
+
+<body>
+  <script src="text/javascript">
+    // 函数记忆-> 函数优化->缓存函数memorize
+    // 阶乘
+    //n! = n*(n-1)!
+    // 6! = 5*4*3*2*1
+    //0！=1
+    // n! = n*(n-1)*......*2*1
+    var times = 0;
+
+    function factorial(n) {
+      times++;
+      if (n === 0 || n === 1) {
+        return 1;
+      }
+      return n * factorial(n - 1);
+    }
+    for (var i = 0; i <= 6; i++) {
+      console.log(factorial(i));
+    }
+    console.log(times);
+  </script>
+</body>
+
+</html>

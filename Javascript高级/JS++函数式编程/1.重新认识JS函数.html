@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>重新认识JS函数</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    //  Javascript世界当中“一等公民”（第一级函数 First-class Founction）：函数
+    //  C/C++/JAVA/C# 是面向过程的（指针/代理），其他的都是纯面向对象语言
+
+    //函数声明 函数调用
+    // 函数作为另外函数的参数  函数赋值变量 函数作为返回值
+    // 声明、调用、赋值、传参、返回、构造函数、类实例、立即执行
+
+    // 例子：函数的几种写法===================================================
+    // function test() { //函数声明
+    //   console.log(1);
+    // }
+    // test(); //函数调用
+
+    // var test = function () { //函数表达式的写法：把一个匿名函数赋值给一个变量（函数表达式也是函数的一种形式）
+    //   console.log(1)
+    // }
+    // test();
+
+    //  写一个函数：函数可以作为另外一个函数的参数==================================================
+    // function add(a, b) {
+    //   return a + b;
+    // }
+
+    // function minus(a, b) {
+    //   return a - b;
+    // }
+
+    // function computed(a, b, fn) { //函数可以作为另外一个函数的参数
+    //   console.log(fn(a, b));
+    // }
+    // computed(1,2,add); //3
+
+    //例子2：函数可以作为返回的=======================================
+    // function add(a, b) {
+    //   return a + b;
+    // }
+
+    // function minus(a, b) {
+    //   return a - b;
+    // }
+
+    // function computed(a,b,fn){
+    //   return fn(a,b);
+    // }
+    // console.log(computed(1,2,add));  //3
+
+
+    //例子3：构造函数：new的时候才能够体现区别，不然跟普通函数没有区别=======================================
+    function computed(a, b) {
+      this.a = a;
+      this.b = b;
+      this.add = function () {
+        return this.a + this.b;
+      }
+      this.minus = function () {
+        return this.a - this.b;
+      }
+    }
+
+    // 实例化
+    var compute = new computed(20, 1);
+    console.log(compute.add()); //21
+
+    //例子3：立即执行函数也可以=======================================
+    var test = (function () {
+      function computed(a, b) {
+        this.a = a;
+        this.b = b;
+        this.add = function () {
+          return this.a + this.b;
+        }
+        this.minus = function () {
+          return this.a - this.b;
+        }
+      }
+      return new computed(10,2);  
+      //函数computed执行以后返回构造函数的对象，赋值给test,之后可以调用里面的add和test方法
+    })();
+    console.log(test.add());  //12
+
+    // 函数式编程，设计模式，面向对象这三个东西构成前端开发的一个体系：什么时候该用什么方法去写你的程序
+    // JS编程特点：函数式编程和面向对象的编程语言：因为它的机制并不是以面向对象为主要的编程方法来规范你的编程的，而是以函数式编程+面向对象来编程的，而且你也可以不用面向对象也能够编程
+    // 可扩展性强：函数参数个数不限制（不确定），数据类型不声明的，由js引擎自己进行侦测，所以是弱类型语言。不要求堆数据类型进行强制声明，
+    // 你可以进行类型转换，但是在普通的进行函数或者对象进行声明的时候，它不要求你对数据类型进行声明。任何的数据类型你只要赋值，它就会跟你赋值的数据类型进行变换
+    //强类型是声明任何东西必须以数据类型为基础，如果数据类型不确定的话，就会报错。
+
+    //优点：编程灵活，易学
+    //缺点：不可控，函数式编程就是让它在有限的条件下变的可控
+  </script>
+</body>
+
+</html>
