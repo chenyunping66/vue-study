@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 
+      v-on(简写@): 用来实现事件绑定的指令
+           v-on:click='xxx'
+           @click='xxx'
+        1.事件触发的时候，需要传递参数信息，把方法加小括号，$event是事件对象
+           v-on:click='sum($event,10,20)'
+        2.事件修饰符：
+          常规修饰符：@click.prevent/.stop == 'xxx'
+          按键修饰符：@keydowm.enter/space/delte/up/right/down/left='xxx'
+          键盘码：@keydown.13 = 'xxx'
+          组合按键： @keydown.alt.67 = 'xxx'  //=》 Alte+C
+     -->
+    <!-- <button v:on:mouseover></button>  v-on后面放事件-->
+    <button v-on:click="sum($event,10,20)">dainj</button>
+
+    <!-- 事件修饰符 -->
+    <a href="www.baidu.com" @click.prevent.stop="func">页面跳转</a> 
+    <!-- prevent.stop阻止默认行为以及冒泡传播 -->
+
+    <input type="text" placeholder="请输入搜索内容" v-model="text" @keydown="func">
+    <input type="text" placeholder="请输入搜索内容" v-model="text" @keydown.enter="func">
+   <!-- @keydown.enter ==> @keydowm.13 按键码 组合按键@keydowm.alt.67 -->
+    
+  </div>
+    <!-- IMPORT JS -->
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+     let vm = new Vue({
+       el:'#app',
+       data:{
+        text:''
+       },
+       methods:{
+         func(ev){
+           //普通函数，this是当前实例vm
+          //  console.log(this);
+           console.log(ev);
+          //  ev.preventDefault(); //阻止默认行为，但是vue提供了一些修饰符
+          //  https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6
+        
+          // 案件修饰符
+          // if(ev.keyCode === 13){ //原生写法
+          //   alert('按下enter出现弹出框！')
+          // }
+          alert('按下enter出现弹出框！')
+        },
+         //绑定多个事件
+         sum(ev,n,m){
+           console.log('试试可以绑定多个事件不？'); //@click只能怪绑定一个事件
+           console.log(arguments);
+         }
+        //  func2:()=>{
+        //    //箭头函数this继承上下文，在vue里面指向window
+        //箭头函数没有自己的this，它的this是继承而来，默认指向在定义它时所处的对象(宿主对象)。
+        // 箭头函数没有自己的this，它的this是继承而来，默认指向在定义它时所处的对象(宿主对象)。
+        //https://blog.csdn.net/xu4321083/article/details/79753800
+        //由于setInterval跟setTimeout调用的代码运行在与所在函数完全分离的执行环境上。这会导致这些代码中包含的 this 关键字会指向 window (或全局)对
+        //    console.log(this);
+        //  }
+       }
+     })
+  </script>
+</body>
+</html>

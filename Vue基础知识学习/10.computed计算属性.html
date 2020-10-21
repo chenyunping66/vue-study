@@ -1,0 +1,59 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 15:57:53
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" class="type" v-model="text">
+    <br>
+    <!-- <span v-text="toUp(text)"></span> -->
+    
+    <!-- 计算属性 -->
+    <span v-text="toUp"></span>
+
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        text: ""
+      },
+      computed: {
+        //=> 计算属性：它不是方法是一个属性，所以在视图中调取的时候，不能加括号执行
+        //toUp 和data中的text一样，都会挂载到实例上，它存储的值是对应方法返回的结果（getter函数处理的结果）
+        // => 计算属性有自己的缓存处理：第一次获取toUp属性值，会关联某个响应式数据（text）,当第一次结果获取后，
+        //      会把这个结果缓存下来，：后期视图重新渲染，首先看text值是否会发生更改，如果发生更改，
+        //      会重新计算toUp的属性值，如果没用更改，则还会拿上次缓存的结果进行渲染
+        toUp() {
+          return this.text.replace(/\b[a-zA-Z]+\b/g, item => {
+            return item.charAt(0).toUpperCase() + item.substring(1);
+          })
+        }
+      },
+      methods: {
+        // toUp(value) {
+        //   //\b代表着单词的开头或结尾，也就是单词的分界处
+        //   return value.replace(/\b[a-zA-Z]+\b/g, item => {
+        //     return item.charAt(0).toUpperCase() + item.substring(1);
+        //   })
+        // },
+      },
+    })
+  </script>
+</body>
+
+</html>

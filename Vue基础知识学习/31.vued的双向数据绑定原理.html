@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- IMPORT JS -->
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    // 组件中的data写成一个函数，数据以函数返回值形式定义，这样每复用一次组件，
+    // 就会返回一份新的data，类似于给每个组件实例创建一个私有的数据空间，
+    // 让各个组件实例维护各自的数据。而单纯的写成对象形式，
+    // 就使得所有组件实例共用了一份data，就会造成一个变了全都会变的结果。
+
+    // Object.defineProperty:对一个对象中某个属性的定义（属性）
+    // dir(Object) 控制台输入 Array.prototype
+    let obj = {
+      age: 20
+    };
+    //delete  Object.defineProperty 控制台删除操作
+    // Object.defineProperty(obj, 'name', {
+    //   value: '学习',
+    //   configurable: false, //控制能不能删除,默认是false不能删除
+    //   //  当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。
+    //   enumerable: true, //是否可枚举的属性  fasle一般不可枚举
+    //   writable: false, //是否允许当前属性被修改
+    // });
+    // //configurable:false, 
+    // delete obj.name;
+    // console.log(obj);
+
+    // //enumerable:true, 
+    // for (let key in obj) {
+    //   console.log(key); //是否可枚举
+    // }
+
+    // // writable:false, 
+    // obj.name = "修改"
+
+    //=> 设置属性的getter\setter
+
+    // love is g/one
+  </script>
+</body>
+
+</html>

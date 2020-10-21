@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据更改影响视图更改</title>
+</head>
+
+<body>
+  <!-- 视图层 -->
+  <div id="app">
+    {{msg}}
+  </div>
+  <div id="box">
+    <span>{{n}}</span>
+    <br>
+    <button @click="handle">点我啊~</button>
+    <!-- v-on:click简写@click -->
+  </div>
+
+  <!-- IMPORT JS -->
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    // 需求：把msg数据绑定在页面中，一秒钟，让视数据改，同时也期望视图更改
+    // let msg = "hello world!";
+
+    //传统DOM操作
+    // setTimeout(()=>{
+    //   msg="你好呀";
+    //   app.innerHTML = msg;
+    // },1000)
+    // let app = document.getElementById('app');
+    // app.innerHTML = msg;
+  </script>
+
+  <script>
+    // 需求：把msg数据绑定在页面中，一秒钟，让视数据改，同时也期望视图更改
+    // let vm = new Vue(); //(options)每创建一个实例相当于创建一个viewmodel监听器，可以监听对应视图和数据的改变
+    let vm1 = new Vue({
+      el:'#app',  //el当前监听器监听的视图，基于querySelector获取
+      data:{ //data:当前监听器监听的数据（这些监听的数据会挂载到vm1的实例上，也就是vm1:msg=xxx来操作的）
+        msg:'hello world'
+      }
+    });
+    setTimeout(()=>{
+      vm1.msg='你好呀加油哦~';
+    },1000);
+  </script>
+  
+  <script>
+    // let vm2 = new Vue({
+    //   el:'#box',
+    //   data:{  //数据层
+    //     n:0
+    //   },
+    //   //=> 放视图需要使用的方法
+    //   methods:{  //控制层
+    //     handle(){
+    //       //this:vm2
+    //       this.n++;  //数据层更改视图层跟着更改，不需要操作DOM
+    //     }
+    //   }
+    // })
+
+    // 使用原始DOM操作的方式：
+    //数据层和（control）全部混合在一起了
+    let box = document.getElementById('box'),
+        span = box.querySelector('span'),
+        button = box.querySelector('button');
+    span.innerHTML = 0;
+    button.onclick = function(){
+      span.innerHTML++;
+    }
+  </script>
+</body>
+
+</html>

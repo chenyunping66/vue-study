@@ -1,0 +1,130 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 20:46:07
+ * @LastEditTime: 2020-10-17 21:43:33
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\14.vue实现选项卡.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- IMPORT CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .tabBox {
+      box-sizing: border-box;
+      margin: 20px auto;
+      width: 600px;
+    }
+
+    .tabBox .tab {
+      display: flex;
+      position: relative;
+      top: 1px;
+    }
+
+    .tabBox .tab li {
+      margin-right: 10px;
+      padding: 0 20px;
+      line-height: 35px;
+      list-style-type: none;
+      border: 1px solid rebeccapurple;
+      background: rgb(231, 184, 184);
+      cursor: pointer;
+    }
+
+    .tabBox .tab li.active {
+      background: white;
+      border-bottom: 1px solid white;
+    }
+
+    .tabBox .content {
+      display: none;
+      box-sizing: border-box;
+      padding: 10px;
+      height: 300px;
+      border: 1px solid #AAA;
+    }
+
+    .tabBox .content.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="tabBox">
+      <ul class="tab" @click="handle($event)">
+        <li v-for="(item,index) in TAB_DATA" 
+        v-html="item.name" :class="{active:index=== curIndex}"
+        :index = "index">
+          <!-- 方法一： @click="curIndex = index" -->
+        </li>
+        <!-- <li>视频</li>
+        <li>动漫</li> -->
+      </ul>
+      <div v-for="(item,index) in TAB_DATA" v-html="item.children" :class="{content:true,active:index === curIndex}">
+        音乐的内容</div>
+      <!-- <div class="content">视频的内容</div>
+      <div class="content">动漫的内容</div> -->
+    </div>
+  </div>
+  <!-- IMPORT JS -->
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    let TAB_DATA = [{
+        id: 1,
+        name: '音乐',
+        children: '音乐的内容'
+      },
+      {
+        id: 2,
+        name: '视频',
+        children: '视频的内容'
+      },
+      {
+        id: 3,
+        name: '动漫',
+        children: '动漫的内容'
+      },
+      {
+        id: 4,
+        name: '纪录片',
+        children: '纪录片的内容'
+      }
+    ];
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        //选项卡数据
+        TAB_DATA,
+        //展示选项卡的案例
+        curIndex: 0
+      },
+      methods:{
+        //方法二： 事件委托实现方法
+        handle(ev){
+          //event.target 属性可以用来实现事件委托 (event delegation)。
+          let target = ev.target,
+              tarTag = target.tagName;  //返回当前元素的标签名
+          if(tarTag === 'LI'){ 
+            //getAttribute() 返回元素上一个指定的属性值
+            this.curIndex = parseInt(target.getAttribute('index'));
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

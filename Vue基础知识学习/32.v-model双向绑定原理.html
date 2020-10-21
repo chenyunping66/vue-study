@@ -1,0 +1,61 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 09:15:35
+ * @LastEditTime: 2020-10-17 12:30:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\32.v-model双向绑定原理.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <input v-model=""> -->
+  <input type="text" id="inpBox">
+  <span id="spanText"></span>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    //=> 响应数据
+    let data = {
+      msg: '数据更改视图33'
+    }
+    let templateData = { //设置默认值
+      msg: data.msg
+    }
+    Object.defineProperty(data, 'msg', {
+      //设置值
+      set(value) {
+        console.log(data.msg) //data.msg赋值给templateData不然会导致死递归
+        templateData.msg = value;
+        render();
+      }
+    })
+
+    //=》 渲染视图
+    function render() {
+      inpBox.value = templateData.msg
+      spanText.innerHTML = templateData.msg
+    }
+    render();
+
+    //=>视图监听数据的更改
+    // https://blog.csdn.net/yiifaa/article/details/52372022  输入框发生的事件流程依次为focus、keydown、input、keyup、change与blur，
+    // js绑定事件:addEventListener和on的区别
+    // 为某元素设定事件触发函数时，可能会觉得addEventListener和on事件的功能差不多，
+    // 但是，addEventListener除了可以设置元素触发顺序外，还能多次绑定事件，因为 on 事件多次绑定的话会出现覆盖。
+    inpBox.addEventListener('input', function () {
+      // inpBox.value = templateData.msg
+      console.log(this.value)
+      data.msg = this.value;
+      render()
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{obj.name}}
+    <!-- JSON.stringify //将 JavaScript 对象转换为 JSON 字符串-->
+    <!-- https://www.cnblogs.com/echolun/p/9631836.html -->
+    <!-- JSON.stringify()的受众更多是对象，而toString()虽然可以将数组转为字符串，但并不能对{name:'天子笑'}这类对象实现你想要的操作，它的受众更多是数字。 -->
+    {{obj}}  
+    <br>
+    {{arr}}
+    <!-- mustache小胡子语法 -->
+     <!-- 小胡子语法 -->
+      <!-- 1.JS表达式 -->
+      <br>
+      {{'name' in obj?'ok':'no'}}
+  </div>
+  <!-- IMPORT JS -->
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let obj = {
+      // name:''
+    };
+    let arr = [10];
+    let vm = new Vue({
+      el: '#app', //=》基于querySelector获取视图容器(特点：指定容器不能是body和HTML)
+      data: {
+        // name:'希望努力加油找个好工作，'
+        obj,
+        arr
+        /*
+        * 在胡子语法中绑定的数据值是对象类型，会基于JSON.stringify把其编译成字符串，
+        再呈现出来（而不是在直接toString处理的）
+        *
+        * 并不是所有的数据更改都会通知视图重新渲染
+        *  1.初始数据是一个对象，对象中没有xxx键值对，后期新增的键值对是不会让视图重新渲染的，解决办法：
+        *    + 1）最好在初始化数据的时候，就把视图需要的数据提前声明好（可以是空值，但是要有这个属性）
+        *       => 原理：只有DATA初始化过的属性才有get/set
+        *   + 2）不要修改某个属性名，而是把对象的值整体替换（指向新的堆内存）
+        *   + 2）可以基于vm.$set内置的方法修改数据：vm.$set(obj,key,value)
+        * 2. 如果数据是一个数组，我们修改数据基于arr[n]=xxx或者arr.length--等操作方式，，是无法让视图重新渲染的，需要基于：
+        *   + push/pop等内置方法
+        *   + 重新把arr的值重写（指向新的堆内存）
+        *   + vm.$set()
+        */
+      }
+    });
+    setTimeout(() => {
+      // vm.obj.name = "一定会的";
+
+      // vm.obj = {  //克隆一份再替换成新的obj,这样就能够导致数据更改（性能不好..）
+      //   ...obj,  //把之前的克隆一份
+      //   name:'不要修改某个属性名，而是把对象的值整体替换（指向新的堆内存）'
+      // };
+
+      vm.$set(vm.obj, 'name', '第三种方法');
+
+      // 数组处理
+      // vm.arr[1] = 20; //这样操作没用
+      // vm.arr.length--; 也没用用的呀，现在怎么都有用了
+      vm.arr = [...arr,30];
+      vm.arr.push(20);
+      vm.$set(vm.arr,1,40);
+
+    }, 1000);
+  </script>
+</body>
+
+</html>

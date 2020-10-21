@@ -55,15 +55,15 @@
   transform: translate(-50%,-50%);
 } */
 
-/* 方案三：不知道宽高的情况下，这种方式不兼容,四个方向都设置为0，再将margin设置为居中 */
-/* .box{
+/* 方案三：这种方式不兼容,四个方向都设置为0，再将margin设置为居中 */
+.box{
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   margin: auto;
-} */
+}
 
 /* 方案四：flex弹性收缩盒模型布局，设置html,body为overflow:hidden */
   /* 设置元素在flex容器主轴和交叉轴方向上的对齐方式，center居中对齐,详见阮一峰的博客 */
@@ -71,8 +71,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-   */
+} */
+  
   </style>
 </head>
 
@@ -82,13 +82,13 @@
     通过类名获取元素（在IE6-8中不兼容）3.[context].getElementsByTagName([TAG-NAME]) 通过标签名获取元素
   </div>
   <script>
-    /*方案五： JS实现居中：（一屏幕的宽度-盒子的宽度）/2 === left */
-    let winW = document.documentElement.clientWidth,
+    /*方案五： JS实现居中：（一屏幕的宽高-盒子的宽高）/2 === left/top */
+/*     let winW = document.documentElement.clientWidth,
         winH = document.documentElement.clientHeight,
         box = document.getElementById('box');
     box.style.position = 'absolute';
     box.style.left = (winW-300)/2 + 'px';
-    box.style.top = (winH-300)/2 + 'px';
+    box.style.top = (winH-300)/2 + 'px'; */
     
   </script>
 </body>

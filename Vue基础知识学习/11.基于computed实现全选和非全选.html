@@ -1,0 +1,86 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 17:43:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="checkbox" v-model="slected">全选/非全选
+    <br>
+    <span v-for="item in hobbyList">
+      <!-- 动态绑定的值用v-bind,获取我们想要的值-->
+      <input type="checkbox" :id="item.id|handleID" :value="item.value" v-model="checkList">
+      <label :for="item.id|handleID" v-text="item.name"></label>
+    </span>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        hobbyList: [{
+            id: 1,
+            name: '唱歌',
+            value: 'song'
+          },
+          {
+            id: 2,
+            name: '阅读',
+            value: 'read'
+          },
+          {
+            id: 3,
+            name: '跳舞',
+            value: 'dance'
+          },
+        ],
+        checkList: [],
+       /* //存储选中的兴趣爱好
+        checkList: [],
+        //存储全选按钮的选中状态
+        slected: false*/
+      },
+      computed: {  //监听响应数据改变的结果
+          //存储的全选按钮的选中状态
+        slected:{
+             get(){
+               return this.checkList.length === this.hobbyList.length;
+             },
+             set(value){
+               //=>点击全选框会修改selected的值
+               //=>  value存储的是选中的状态
+               if(value){
+                 this.hobbyList.forEach(item=>{
+                   //数组只能通过内置的push实现新增功能，渲染视图
+                  //  this.checkList[item.value]
+                   this.checkList.push(item.value);
+                 });
+                 return;
+               }
+               this.checkList = [];
+             }
+        }
+
+      },
+      filters: {
+        handleID(value) {
+          return 'hobby' + value;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

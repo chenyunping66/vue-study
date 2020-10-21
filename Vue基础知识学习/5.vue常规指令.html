@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    vue指令：directive
+     1.都是按照v-xxx处理的，它是vue中规定给元素设置的自定义属性
+     2.当vue加载成功并进行处理的时候，会按照相关的规则解析和渲染视图，通过对应的指令实现对应的功能
+    v-model一般给表单元素设置，实现表单元素和数据之间的相互绑定
+     1）先把数据绑定给表单元素，一般把数据赋值给表单元素的value
+     2） 监听表单元素的内容改变
+     3） 内容改变后，会把对应的数据也改变
+     4） 对应的数据改变，视图中所有用到的数据的地方都会重新渲染
+     视图 <=> 数据
+     在vue框架中给表单元素设置value等属性是没用意义的
+
+   v-html/v-text:给非表单元素设置内容，v-html支持对于标签的自动识别，v-text会把所有的内容都当作文本
+       传统的胡子语法，在vue没加载之前，会把{{xxxx}}展示在页面中，当vue加载完才会出现真正的内容，这样体验不好
+  v-bind:给元素的内置属性动态绑定数据，例如：给img绑定动态的图片路径地址
+          可以简写为：v-bind:sec 等价于 :src
+  v-once:绑定的数据是一次性的，后面不论数据怎么改变，视图也都不会重新渲染'
+  v-if: 如果对于的值是true,当前元素会在结构中显示，如果是false,当前元素会在结构中移除
+      （它控制的是组件的加载和卸载的操作=》DOM的增加和删除）：还有对应的v-else-if/v-else等指令：
+  
+      v-show:和v-if类似，只不过它控制的是元素样式的显示和隐藏
+         1）v-if是控制组件存不存在，对于结构是false,不存在的组件来说，视图渲染的时候无需渲染这部分内容；而v-show则不行，因
+         为不管是显示还是隐藏，结构都在，所有视图渲染的时候这部分也要渲染：（DOM DIFF算法）
+         2）在过于频繁的切换操作中，v-if明显要比v-show要低一些。-if有更高的切换消耗；v-show有更高的初始渲染消耗；
+         如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+         https://www.jianshu.com/p/7af8554d8f08
+      -->
+  <div id="app">
+     <input type="text" v-model="msg">
+     <span v-html="msg"></span>
+     <!-- <span>{{msg}}</span> 现在好像没这个问题了 -->
+     <!-- <img v-bind:src="pic" alt=""> -->
+     <img :src="pic" alt="">
+    
+     <span v-html="msg"></span>
+     <span v-once  v-html="msg"></span>
+
+     <button v-html="btnmsg" @click="handle"></button>
+     <br>
+     <!-- <img :src="pic" alt="" v-if="show"> -->
+     <img :src="pic" alt="" v-show="show">
+     <!-- style="display: none;" -->
+
+  </div>
+   <!-- IMPORT JS -->
+   <!-- 开发时候尽可能使用未压缩版本，这样有错误会抛出异常 -->
+   <script src="../node_modules/vue/dist/vue.js"></script>
+   <script>
+     let vm = new Vue({
+       el:'#app',
+       data:{
+         //=> 这里的数据最后都会作为实例的属性瓜子啊到实例上vm.show....
+         msg:'隐藏图片',
+         btnmsg:'我是控制显示隐藏的按钮',
+         show:true,
+         pic:'../Javascript高级/06商城排序案例/img/4.jpg'
+       },
+       methods:{
+         //=> 这里的方法最后也会挂载实例的私有属性上
+        handle(){
+          //=> this:vm
+          console.log(this)
+          this.show = !this.show;
+          this.btnmsg = this.show?'隐藏图片':'显示图片';
+        }
+       }
+     });
+     setTimeout(() => {
+        vm.msg ="哈哈哈";
+     }, 1000);
+   </script>
+</body>
+</html>

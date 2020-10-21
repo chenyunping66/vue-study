@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>商城排序</title>
+  <!-- IMPORT CSS -->
+  <link rel="stylesheet" type="text/css" href="price.css" />
+</head>
+
+<body>
+  <div id="app">
+    <h3 v-text="title"></h3>
+    <!-- 
+      调取组件
+          + 单闭合:不符合w3c规范，调取完成后，后面的视图不识别（避免使用的）
+          + 双闭合：可以设置除组件规定内容外的其余内容（slot）
+     -->
+     <!-- <my-button/>
+     加的其他内容 -->
+    <my-button>
+      我加的其他内容（slot插槽）
+    </my-button>
+  </div>
+
+  <!-- IMPORT JS -->
+  <script src="../../../../node_modules/vue/dist/vue.js"></script>
+  <script>
+  /*
+   * 组件的特点：
+   *  - 可复用
+   *  - 方便维护
+   *  - 方便拆分
+   *  - 每一个vue组件都是一个独立的个体（独立的vm实例）：DATA是独立的（不同组件的DATA应该是互补干扰的）
+   *   、有完成的生命周期、方法等也是独立的
+   *  - 能够实现组件的嵌套：需要掌握组件之间的信息通信
+   *  - 有自己的响应式数据和各种方法（事件）
+   *  - 每个组件作用域隔离（互补干扰）
+   *  -.....
+  */
+
+  /*
+   * 全局组件：无需单独引用或者配置，直接在大组件中调取全局组件即可(dir(Vue))
+   *   Vue.component(componentName,options)
+   *     + options可以使用的有vm实例具备的大部分（data、methods、生命周期函数....）
+   *     + 每调用一次组件都创建一个单独的vue实例（原型指向：VueComponent-> Vue）
+   *  组件命名的规则”
+   *     + kebab-case:横线作为分隔符  只能基于kebab方式调取
+   *     + PasalCase:单词首字母大写 既可以基于Pasal方式调取，也可以基于kebab方式调取（如果在template模板中可以使用pasal方式调取）
+   *     + 调取组件的时候，会把所有组件的单词渲染成小写字母（我们命名的时候除PasalCase模式外，我们要
+   *       把组件名设置为小写，调取组件的时候可以是大写也可以是小写（最后都是按照小写渲染的））
+   *     + 命名的时候尽量不要出现其余的特殊字符
+   */
+ let aa = Vue.component('MyButton',{
+  template:'<button>组件中的按钮</button>',
+  created(){
+     console.log(this);
+   }
+ });
+    let vm = new Vue({
+      el: '#app',
+      // vm.$mount('#app')
+      data: {
+        title:'学习'
+      },
+
+   
+    })
+
+    // let arr = [10, 20, 30, 40];
+    // //accumulator累加器（和）  item（当前元素） index（下标）
+    // let result = arr.reduce((accumulator, item, index) => {
+    //   console.log(accumulator, item, index, );
+    //   return accumulator + item; // 30+30+40=100求和
+    // }, 120); //=> 第二个参数是初始化累加器的值 //120++10 =》  + 20 =》 120+10+20 +30 =>180+40=>220
+    // console.log(result);
+  </script>
+</body>
+
+</html>

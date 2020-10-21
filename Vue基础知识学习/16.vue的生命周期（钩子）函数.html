@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    //vue中，为什么data是一个方法返回一个对象，而不是直接赋给一个对象
+    // 怕重复创建实例造成多实例共享一个数据对象  https://juejin.im/post/6844903638939205640
+
+    /*
+     * 生命周期函数（钩子函数）： 生命周期的this是当前实例
+     *  beforeCreate 创建vue实例之前
+     *  created创建实例成功（一般在这里实现数据的异步请求）
+     *  beforeMount 渲染DOM之前（加载组件第一次渲染）
+     *  mounted 渲染DOM完成（架子啊组件第一次渲染）
+     *  beforeUpdate 重新渲染之前（数据更新等操作控制DOM重新渲染）
+     *  update重新渲染完成
+     *  beforeDestory 销毁之前
+     *  destroyed 销毁完成
+     */
+    let vm = new Vue({
+      el: '#app',
+      //  template:'<h1>{{msg}}</h1>',
+      beforeMount() {
+        console.log(document.getElementById('app'));
+      },
+      mounted() { //在mounted里面可以进行DOM操作以及事件操作了
+        console.log(document.getElementById('app'));
+      },
+      data: {
+        msg: '测试'
+      }
+    });
+    //=> 指定当前vm所关联的视图
+    // vm.$mount('#app');//=> el:'#app'
+
+    vm.$destroy()
+    console.log(vm)
+    //=> vm.msg = "ss" 销毁之后，再去修改响应式数据的值，视图也不会再重新渲染了
+  </script>
+</body>
+
+</html>

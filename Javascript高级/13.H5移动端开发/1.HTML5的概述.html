@@ -1,0 +1,130 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-26 20:48:17
+ * @LastEditTime: 2020-10-13 15:06:04
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Javascript高级\13.H5移动端开发\1.HTML5的概述.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5</title>
+  <!-- 小于ie9的才引入html5： 条件注释判断浏览器版本 -->
+  <!--[if IE 9]>
+ <script src="https://cdn.bootcdn.net/ajax/libs/html5shiv/r29/html5.min.js"></script>
+  <!-- ![endif]-->
+</head>
+
+<body>
+  <!-- 
+    传统的表单元素
+       form
+       input:text/radio/checkbox/button/submit/reset/hidden/file...
+       textarea
+       select
+    HTML5中新增表单元素或者input中新增的类型：
+       input: search/email/tel/number/date/time/color(颜色)/range（滑动）.......
+    1)功能强大
+    2)在移动端能调取出来对应的键盘
+   -->
+  <!-- <input type="date" name="" id=""> -->
+  <!-- input:data/color -->
+  <style>
+    /* 使用css样式实现验证方式 */
+    .formBox input:invalid+p {
+      opacity: 1;
+    }
+
+    .formBox input:valid+p {
+      opacity: 0;
+    }
+  </style>
+  
+  <div class="formBox">
+    <input type="email" id="emailInput" placeholder="请输入邮箱地址">
+    <p id="emailTip">输入的邮箱格式不正确</p>
+  </div>
+  <!-- HTML5自带表单类型的验证方式 -->
+  <script>
+    //  1276849382@qq.com
+    emailInput.onkeydown = emailTip.onkeyup = function () {
+      console.dir(this)
+      console.log(this.checkValidity())
+      if (!this.checkValidity()) {
+        emailTip.style.opacity = 1;
+        return;
+      }
+      emailTip.style.opacity = 0;
+    }
+  </script>
+
+  <!-- 
+     前后端不分离项目中的表单提交
+     <form action="addUser.php">
+      <input type="submit" value="提交">
+     </form>
+    -->
+  <!-- 为啥要标签语义化：合理的标签做合适的事情
+          => 有利于SEO搜索引擎优化推广
+          SEO: 搜索引擎关键词排名推广
+          SEM: 百度竞价
+
+          前后端技术分离的产品（数据绑定有前端JS或者模板引擎来渲染的）
+  -->
+  <!-- <ul>
+    <li><a href="">首页</a></li>
+    <li><a href="">个人中心</a></li>
+    <li><a href="">产品中心</a></li>
+    <li><a href="">服务指南</a></li>
+    <li><a href="">联系我们</a></li>
+  </ul> -->
+  <nav>
+    <a href="">首页</a>
+    <a href="">个人中心</a>
+    <a href="">产品中心</a>
+    <a href="">服务指南</a>
+    <a href="">联系我们</a>
+  </nav>
+  <!-- 
+    HTML:超文本标记语言
+    XHTML:更加严谨的HTML
+    HTML5:新一代HTML规范（适配移动端设备）
+   -->
+  <!-- 
+     html5重点知识：
+     https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5
+     - html5/css3的兼容性检测：http://caniuse.com/
+     - 在线检测编写的代码是否符合标准：http://validator.w3.org 
+     - 推荐书籍：HTML5秘籍第二版
+    -->
+
+  <!-- document.body.contentEditable = true;  //使得页面变成可以编辑的 -->
+  <!-- document.body.style.filter = "grayscale(1); 使得网页变成灰色 -->
+  <!-- 
+      新增语义化标签：
+      【块级标签】：
+          header 头部区域
+          main  主体
+          footer 尾部
+          article 文件
+          nav 导航
+          figure 配图
+          figcaption 配图说明
+          aside 与主体内容无关（一般应用于侧边栏）
+          section 普通区域
+      【行内标签】
+         mark 文本标记
+         time 日期标记
+      ......
+      处理兼容（IE6~8）只需要导入：html5.min.js
+      https://www.bootcdn.cn/
+      https://www.bootcdn.cn/html5shiv/
+     -->
+</body>
+
+
+</html>

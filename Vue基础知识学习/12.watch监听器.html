@@ -1,0 +1,97 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 18:04:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="checkbox" v-model="selected" @change="handle">全选/非全选
+    <!-- <input type="checkbox" @click="handle">全选/非全选 -->
+
+    <br>
+    <span v-for="item in hobbyList">
+      <!-- 动态绑定的值用v-bind,获取我们想要的值-->
+      <input type="checkbox" :id="item.id|handleID" :value="item.value" v-model="checkList">
+      <label :for="item.id|handleID" v-text="item.name"></label>
+    </span>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        hobbyList: [{
+            id: 1,
+            name: '唱歌',
+            value: 'song'
+          },
+          {
+            id: 2,
+            name: '阅读',
+            value: 'read'
+          },
+          {
+            id: 3,
+            name: '跳舞',
+            value: 'dance'
+          },
+        ],
+
+        //存储选中的兴趣爱好
+        checkList: [],
+        //存储全选按钮的选中状态
+        selected: false
+      },
+      computed: { //监听响应数据改变的结果
+      },
+      //=> watch监听响应式数据的改变（watch中监听的响应式数据必须在data中初始化），
+      //  和computed中的setter类似，只不过computed是自己单独设置的计算属性，不能和data冲突，
+      //  而watch只能监听data中有的属性
+      //=> 监听器支持异步操作 computed的getter不支持异步获取数据
+      watch: {
+        // selected() {
+        //   if (this.selected) {
+        //     this.hobbyList.forEach(item => {
+        //       this.checkList.push(item.value);
+        //     });
+        //     return;
+        //   }
+        //   this.checkList = [];
+        // },   //只监听一个，另外一个走事件，因为watch里面的内容全部都触发执行
+        checkList() {
+          this.selected = this.checkList.length === this.hobbyList.length ? true : false
+        }
+      },
+      methods:{
+        handle(){
+          if (this.selected) {
+            this.hobbyList.forEach(item => {
+              this.checkList.push(item.value);
+            });
+            return;
+          }
+          this.checkList = [];
+        }
+      },
+      filters: {
+        handleID(value) {
+          return 'hobby' + value;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

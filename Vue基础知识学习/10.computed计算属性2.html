@@ -1,0 +1,93 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 16:24:57
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>正常结果：{{text}}</p>
+    <p>反转结果：{{reversMethod()}}</p>
+    <p>反转结果：{{reverseComputed}}</p>
+
+    <p>{{now1}}</p>
+    <p>{{now2()}}</p>
+
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    //=》 真实项目中：我们一般用一个计算属性和某些响应式数据进行关联，响应式数据发生改变，计算属性的getter函数会重新执行
+    //               否则使用的是上一次计算出来的缓存结果
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        text: "my name is lili"
+      },
+      computed: {
+        //getter函数
+        reverseComputed() {  //和某个响应式数据改变，才会重新渲染
+          // console.log('computed')  //数据改变才触发
+          return this.text.split('').reverse().join(''); //反转
+        },
+        now1(){
+          //=> 计算数学中必须关联一个响应数据，否则getter函数只执行一次
+          return new Date();
+        }
+      },
+      methods: { //不管text是否改变，每次视图渲染都会执行(只要视图重新渲染，这个方法都会执行)
+        reversMethod() {
+          // console.log('methods')  //走了5次
+          /*
+           *   1：arrayObject.reverse()
+           *	   注意： 该方法会改变原来的数组，而不会创建新的数组。
+           *	2：arrayObject.join()
+           *	   注意：join() 方法用于把数组中的所有元素放入一个字符串。
+           *      元素是通过指定的分隔符进行分隔的。
+           *	   指定分隔符方法join("#");其中#可以是任意
+           *	3：stringObject.split(a,b)这是它的语法
+           *      方法：用于把一个字符串分割成字符串数组.
+           *      a是必须的决定个从a这分割
+           *      b不是必须的，可选。该参数可指定返回的数组的最大长度 。如果设置了该参数，返回的子串不会多于这个参数指定的数组。如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。
+           *      注意：返回的数组中不包括a本身；
+           *      提示和注释：
+           *      注释：如果把空字符串 ("") 用作 a，那么 stringObject 中的每个字符之间都会被分割。
+           *      注释：String.split() 执行的操作与 Array.join 执行的操作是相反的。   
+           *
+           *
+           */
+          return this.text.split('').reverse().join(''); //变成数组=》 反转 =》 字符串
+        },
+        now2(){
+          return new Date();
+        }
+      },
+    });
+    let n = 0;
+    let timer = setInterval(() => {
+      n++;
+      if (n > 5) {
+        clearInterval(timer);
+        return;
+      }
+      if (n == 3) {
+        vm.text = '第三次更改text数据';
+        return;
+      }
+      //=> 强制更新视图的重新渲染
+      vm.$forceUpdate();
+    }, 1000)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>珠峰培训</title>
+  <style type="text/css">
+    body {
+      font-size: 14px;
+      font-family: "Lantinghei SC Extralight", Arial;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    img {
+      vertical-align: top;
+    }
+
+    #wrap {
+      width: 760px;
+      height: 260px;
+      margin: 20px auto;
+      padding: 145px 120px 95px;
+      background: url(img/bg.jpg) no-repeat 0 0;
+    }
+
+    #section {
+      width: 760px;
+      height: 260px;
+      -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+    }
+
+    #choose {
+      width: 760px;
+      height: 50px;
+      margin: 0 auto;
+      background: url(img/nav_bg.png) no-repeat 0 0;
+      line-height: 50px;
+      text-indent: 21px;
+    }
+
+    #type {
+      width: 100%;
+      height: 210px;
+      background: url(img/type_bg.png) no-repeat 0 0;
+      padding: 17px 0 16px 28px;
+    }
+
+    #type li {
+      height: 44px;
+      color: #8a8a8a;
+      line-height: 44px;
+    }
+
+    #type a {
+      margin: 0 12px 0 11px;
+      color: #000;
+    }
+
+    #choose mark {
+      position: relative;
+      display: inline-block;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid #28a5c4;
+      color: #28a5c4;
+      margin: 12px 5px 0;
+      background: none;
+      padding: 0 30px 0 6px;
+      text-indent: 0;
+    }
+
+    #choose mark a {
+      position: absolute;
+      top: 3px;
+      right: 2px;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: #28a5c4;
+      color: #fff;
+      line-height: 18px;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <section id="section">
+      <nav id="choose">
+        你的选择：
+        <mark v-for="(item,index) in SELECT_DATA">
+          <span v-text="item.name"></span>
+          <a href="javascript:;" @click="deleteItem(item.type)">X</a>
+        </mark>
+      </nav>
+      <ul id="type">
+        <li v-for="(item,index) in CARD_DATA">
+          <span v-text="item.text"></span>
+          <a href="javascript:;" v-for="child in item.content" v-text="child"
+            @click="handleSelect(item.type,child)"></a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- IMPORT JS -->
+  <script src="../../../../node_modules/vue/dist/vue.js"></script>
+  <script>
+    //=> 类别具体的分类数据
+    let CARD_DATA = [{
+      type: 1,
+      text: '品牌',
+      content: ["苹果", "小米", "锤子", "魅族", "华为", "三星", "OPPO", "vivo", "乐视", "360", "中兴", "索尼"]
+    }, {
+      type: 2,
+      text: '尺寸',
+      content: ["3.0英寸以下", "3.0-3.9英寸", "4.0-4.5英寸", "4.6-4.9英寸", "5.0-5.5英寸", "6.0英寸以上"]
+    }, {
+      type: 3,
+      text: '系统',
+      content: ["安卓", "苹果", "微软", "无", "其他"]
+    }, {
+      type: 4,
+      text: '网络',
+      content: ["联通3G", "双卡单4G", "双卡双4G", "联通4G", "电信4G", "移动4G"]
+    }];
+    //=》 选中项的数据
+    let SELECT_DATA = [{
+      type: 1,
+      name: '苹果'
+    }];
+
+    let vm = new Vue({
+      el: '#wrap',
+      data: {
+        CARD_DATA,
+        SELECT_DATA,
+      },
+      methods: {
+        deleteItem(type) {
+          this.SELECT_DATA = this.SELECT_DATA.filter(item => {
+            return parseInt(item.type) !== parseInt(type); //强制转换成数字类型
+          });
+        },
+        handleSelect(type, name) {
+          //=》 增加之前先进行是否存在判断
+          //some至少一项 every必须符合条件
+          let flag = this.SELECT_DATA.some(item =>
+            parseInt(item.type) === parseInt(type));
+          if (flag) {
+            //符合的话,改变其中某一项进行替换
+            //存在这一项，就把这一项name进行修改
+            this.SELECT_DATA = this.SELECT_DATA.map(item => {
+              if (parseInt(item.type) === parseInt(type)) {
+                item.name = name;
+              }
+              return item;
+            })
+          } else {
+            //=> 增加新的选中项
+            this.SELECT_DATA.push({
+              type,
+              name
+            });
+          }
+          //=》 一次处理完把选中的数据进行排序
+          //最后都是统一渲染一次
+          this.SELECT_DATA.sort((A, B) => { //点击的时候，才需要重新渲染
+            return A.type - B.type;
+          });
+
+        }
+      },
+      beforeUpdate(){  //每次重新渲染的时候（不管是什么触发渲染），执行一次
+        console.log('ok'); //查看渲染几次
+        // this.SELECT_DATA.sort((A, B) => {  //每次重新渲染的时候，进行排序
+        //     return A.type - B.type;
+        //   });
+      }
+    })
+  </script>
+</body>
+
+</html>

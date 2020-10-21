@@ -1,0 +1,79 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 02:10:54
+ * @LastEditTime: 2020-10-17 13:47:54
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\8.vue中的表单元素.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue中表单元素</title>
+</head>
+
+<body>
+  <!-- 
+    单选或者复选按钮
+       1.按照v-model进行分组，单选框准备的数据是一个值，复选框准备的数据是一个数组
+       2.每一个框都有自己的value,谁被选中，数据值就是被选中的元素的value值。
+         相反，值是多少，对应value的元素也会默认选中
+   -->
+  <div id="app">
+    <!-- 性别：<br>
+    <input type="radio" value="0" v-model.number="sex" checked/>男
+    <input type="radio" value="1" v-model.number="sex"/>女
+   // v-model.number得到数字值 
+    <br>
+    <button @click="submit">提交</button> -->
+
+    <input type="checkbox" value="ok" v-model="all" @click="allHandle"/>全选/非全选
+    <br>
+    <div @change="delegate">
+      <input type="checkbox" value="read" v-model="hobby"> 读书
+    <input type="checkbox" value="code" v-model="hobby"> 编程
+    <input type="checkbox" value="study" v-model="hobby">学习
+    <input type="checkbox" value="draw" v-model="hobby"> 画画
+    </div>
+    <br>
+    <button @click="submit">提交</button>
+  </div>
+  <!--官方文档链接： https://cn.vuejs.org/v2/guide/forms.html -->
+  <!-- IMPORT JS -->
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        sex: 0,
+        hobby: ['code'],
+        all: []
+      },
+      methods: {
+        submit() {
+          // console.log(this.sex);
+          console.log(this.hobby); //将选中项加入数组中，移除项目从数组中移除
+        },
+        allHandle(){
+         console.log(this.all); //先执行click事件,vue之后才会更改数据
+         //=》 click事件处理比视图更新后的数据更改要先去做
+          if(!this.all.includes('ok')){
+              this.hobby = ['read','code','study','draw']
+          }else{
+             this.hobby = []
+          }
+        },
+        delegate(){ //触发事件同时触发数据更新
+        //=> change事件处理，要晚于数据更新
+           console.log(this.hobby);
+           this.all = this.hobby.length>=4?['ok']:[];
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h3 v-html="msg" ref="titleBox"></h3>
+    <p ref="pBox"></p>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js"></script>
+  <script>
+    //=>  vue框架开发的时候，我们应该尽可能减少去操作DOM
+    //=> 基于ref可以把当前元素放置到this.$refs对象中，从而实现DOM的直接操作
+    //    只有在mounted以及之后才可以获取到这些元素
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'ceshi'
+      },
+      mounted() {
+        console.log(this.$refs); //{titleBox: h3, pBox: p}
+      }
+    })
+  </script>
+</body>
+
+</html>

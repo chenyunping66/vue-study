@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>商城排序</title>
+  <!-- IMPORT CSS -->
+  <link rel="stylesheet" type="text/css" href="price.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="wrap">
+      <div class="box">
+        <ul class="list">
+          <li v-for="(item,index) in productionList">
+            <i @click="handle($event,'minus',index)"></i>
+            <em v-html="item.count"></em>
+            <i @click="handle($event,'plus',index)"></i>
+            <span>
+              单价：<strong v-html="item.price+'元'"></strong>
+              小计：<strong v-html="computedTotal(item.count,item.price)"></strong>
+            </span>
+          </li>
+        </ul>
+        <div class="info">
+          <span>商品公合计：<em v-html="total"></em>件</span>
+          <span>共花费了：<em v-html="totalPrice"></em>元</span>
+          <span>其中最贵的商品单价是：<em v-html="maxPrice"></em>元</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORT JS -->
+  <script src="../../../../node_modules/vue/dist/vue.js"></script>
+  <script>
+    //=>准备数据模型（页面就是按照数据模型渲染出来的）
+    let _DATA = [{
+      id: 1,
+      count: 0,
+      price: 12.5,
+    }, {
+      id: 2,
+      count: 0,
+      price: 10.5,
+    }, {
+      id: 3,
+      count: 0,
+      price: 8.5,
+    }, {
+      id: 4,
+      count: 0,
+      price: 8,
+    }, {
+      id: 5,
+      count: 0,
+      price: 14.5,
+    }];
+
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        productionList: _DATA,
+      },
+      methods: {
+        computedTotal(count, price) {
+          return count * price + '元';
+        },
+        handle(ev, type, activeIndex) {
+          //map有返回值
+          this.productionList = this.productionList.map((item, index) => {
+            if (activeIndex === index) {
+              if (type === 'minus') {
+                item.count--;
+                item.count <= 0 ? item.count = 0 : null;
+              } else if (type === 'plus') {
+                item.count++;
+                // 最多只能买10件
+                item.count >= 10 ? item.count = 10 : null;
+
+              }
+            }
+            return item;
+          });
+        }
+      },
+      computed: { //就是一个属性
+        //直接赋值一个函数属于getter函数
+        //=》 总数量
+        total() {
+          // let total = 0;
+          // //forEach()方法不会返回执行结果，而是undefined。也就是说，forEach()会修改原来的数组。而map()方法会得到一个新的数组并返回。
+          // //https://blog.fundebug.com/2018/02/05/map_vs_foreach/
+          //https://juejin.im/post/6844903807176933384  //JavaScript 中 forEach、map、filter 详细
+
+          // 1、forEach 和 map 能实现的功能相似
+          // 2、forEach 、 map、filter 都能实现对原数组的修改
+          // 3、forEach 没有返回值，map 有返回值，filter 有返回值
+
+          // this.productionList.forEach(item=>{
+          //   total += item.count;
+          // });
+          // return total;
+
+          return this.productionList.reduce((accumulator, item) => {
+            return accumulator + item.count;
+          },0);
+        },
+        //=》总价格
+        totalPrice() {
+          return this.productionList.reduce((accumulator, item) => {
+            return accumulator + item.count * item.price;
+          },0);
+        },
+        //=》最大单价
+        maxPrice() {
+          // //filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+          // 注意： filter() 不会对空数组进行检测。
+          // 注意： filter() 不会改变原始数组。
+          let arr = this.productionList.filter(item => {
+            return item.count >= 1;
+          }).map(item => {
+            return item.price;
+          });
+          return  arr.length === 0 ? 0 : Math.max(...arr);
+        }
+      }
+    })
+
+    // let arr = [10, 20, 30, 40];
+    // //accumulator累加器
+    // let result = arr.reduce((accumulator, item, index) => {
+    //   console.log(accumulator, item, index, );
+    //   return accumulator + item; // 30+30+40=100求和
+    // }, 120); //=> 第二个参数是初始化累加器的值 //120++10 =》  + 20 =》 120+10+20 +30 =>180+40=>220
+    // console.log(result);
+  </script>
+</body>
+
+</html>

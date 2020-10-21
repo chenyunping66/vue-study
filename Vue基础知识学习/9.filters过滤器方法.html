@@ -1,0 +1,85 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 15:44:52
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" class="type" v-model="text">
+    <br>
+    <!-- <span v-text="text.substring(1)"></span> -->
+    <!-- <span v-text="text.replace(/\b[a-zA-Z]+\b/g,item=>{
+        return item.charAt(0).toUpperCase() + item.substring(1); 
+      })"></span> -->
+    <!-- //从字符串中取字符str.charAt(0); 第一个字符  substring() 方法返回的子串包括 start 处的字符，但不包括 stop 处的字符。-->
+    <!-- <span v-text="toUp(text)"></span> -->
+
+    <!-- 
+      过滤器的语法：按照竖线分隔，把竖线左侧的值传递给右侧的过滤器方法，
+                   经过方法的处理，把处理后的结果展示在视图中
+      过滤器方法只能在胡子语法{{}}和v-bind中使用（过滤器中的方法没有挂载到实例上）
+     -->
+    <!-- <span>{{text|filterA|filterB}}</span> -->
+    <span>{{text|toUp|filterB}}</span>
+    <!-- <img :src="pic|picHandle" alt=""> -->
+
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        //=> 响应式数据：DATA中准备的是要在视图总渲染的数据（model）
+        text: ""
+      },
+      methods: {
+        //=>都会挂载到实例vm上（不能和data中的属性名冲突）
+        //   这里制订的方法是普通方法，可以在视图中调取使用，也可以在其他方法中调取使用
+        toUp(value) {
+          //\b代表着单词的开头或结尾，也就是单词的分界处
+          return value.replace(/\b[a-zA-Z]+\b/g, item => {
+            return item.charAt(0).toUpperCase() + item.substring(1);
+          })
+        },
+        // AA() {
+        //   this.toUp('');
+        // },
+      },
+      filters: {
+        //=> 设置过滤器：把需要在视图中渲染的数据进行二次或者多次的处理
+        filterA(value) {
+          //=>value:需要过滤的数据return 返回的是过滤后的结果
+          return value.replace(/\b[a-zA-Z]+\b/g, item => {
+            return item.charAt(0).toUpperCase() + item.substring(1);
+          })
+        },
+        filterB(value) {
+          return value.split('').reverse().join('');
+        },
+        toUp(value) {
+          //\b代表着单词的开头或结尾，也就是单词的分界处
+          return value.replace(/\b[a-zA-Z]+\b/g, item => {
+            return item.charAt(0).toUpperCase() + item.substring(1);
+          })
+        },
+        picHandle(value){
+          return value.length === 0?'http://www.baidu.com':value
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>商城排序</title>
+  <!-- IMPORT CSS -->
+  <link rel="stylesheet" type="text/css" href="price.css" />
+</head>
+
+<body>
+  <div id="app">
+    <h3 v-text="title"></h3>
+    <!-- 
+      调取组件
+          + 单闭合:不符合w3c规范，调取完成后，后面的视图不识别（避免使用的）
+          + 双闭合：可以设置除组件规定内容外的其余内容（slot）
+     -->
+     <!-- <my-button/>
+     加的其他内容 -->
+    <!-- <my-button></my-button> -->
+    <my-button></my-button>
+    <!-- TEMPLATE:创建template标签用来构建组件渲染的视图 -->
+  </div>
+
+  <!-- IMPORT JS -->
+  <script src="../../../../node_modules/vue/dist/vue.js"></script>
+  <script>
+ let aa = Vue.component('MyButton',{
+   //=> 必须设置template或者render函数：l来规定当前组件的渲染视图
+   //1.只能有一个根元素节点
+  template:`<div>
+    <button>组件中的按钮</button>
+    <p>珠峰培训</p>
+    </div>`,
+  created(){
+     console.log(this);
+   }
+ });
+    let vm = new Vue({
+      el: '#app',
+      // vm.$mount('#app')
+      data: {
+        title:'学习'
+      },
+
+   
+    })
+
+  </script>
+</body>
+
+</html>

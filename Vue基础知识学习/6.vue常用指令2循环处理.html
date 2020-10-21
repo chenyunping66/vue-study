@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    v-for:循环动态绑定数据,
+      想循环谁就给谁设置v-for
+      循环类似for/for in的语法：v-for= 'item in arr'
+   -->
+
+  <div id="app">
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item,index) in arr">
+          <td v-html="item.id"></td>
+          <td v-html="item.name"></td>
+          <td v-html="item.age"></td>
+        </tr>
+        <!-- <tr>
+              <td>1</td>
+              <td>张三</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>张四</td>
+              <td>26</td>
+            </tr> -->
+      </tbody>
+    </table>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        arr: [{
+            id: 1,
+            name: '自律',
+            age: 25
+          },
+          {
+            id: 2,
+            name: '自律',
+            age: 24
+          },
+          {
+            id: 3,
+            name: '自律',
+            age: 26
+          }
+        ]
+      }
+    })
+  </script>
+  <script>
+    //JS中循环的几种方式：for循环、while循环、do while循环、for in 循环、for of循环(ES6)
+    let arr = [20, 30, 40],
+      obj = {
+        name: '加油',
+        year: 20,
+        1: 200
+      };
+     /*Object.prototype.AA = 12;
+    for (let key in obj) {
+      //=> KEY是遍历的属性名
+      //=> obj[key]属性值
+      //=> 优先遍历属性名为数字的
+      //=> 会把所属类原型上自定义的属性方法也遍历到
+      //=> 会把所属类原型上自定义的属性方法也遍历到
+      console.log(key);
+      if (!obj.hasOwnProperty(key)) break;
+      console.log(key);  //这样的话只获取到自己私有的
+    }*/
+
+    //for in 遍历数组
+   /* for(let key in arr){
+      if(!arr.hasOwnProperty(key)) break;
+      console.log(key,arr[key]);
+    }*/
+
+
+  //=====================
+  //=> ES6新增的for of循环
+  for(let item of arr){
+    //特点：1.获取的不是属性名是属性值
+    //      2.不会遍历原型上公有的属性方法（哪怕是自定义的）
+    //      3.只能遍历可被迭代的数据类型值（Symbol.iterator）： Array\String\Arguments\NodeList\Set\Map等，
+    //         但是普通对象是不可迭代的数据，所以不能用for/of循环
+    //  控制台查看arr/obj/new String("123")/  看上面是否有Symbol.iterator就可以查看是否可被迭代的了
+    console.log(item); //遍历的是值，不是属性名
+  }
+  for(let item of obj){
+    console.log(item); //遍历的是值，不是属性名
+  }
+  
+  </script>
+</body>
+
+</html>

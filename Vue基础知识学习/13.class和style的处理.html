@@ -1,0 +1,65 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-17 13:49:03
+ * @LastEditTime: 2020-10-17 20:43:38
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\Vue基础知识学习\9.filters过滤器方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active{
+      color:red;
+    }
+    .big{
+      font-size:40px;
+    }
+   </style>
+</head>
+
+<body>
+  <div id="app" >
+    <!-- 
+      对象处理动态样式
+         :class="{样式类名：响应式数据，....}"
+         响应数据为tre则有这个样式，反之则没有
+     -->
+     <p :class="{active:a,big:true}">数据信息资源学习只能比别人多努力一点了既然还差这么多只能符出比别人更多的时间来弥补这个差距</p>
+     <button @click="handle">切换样式按钮</button>
+     <!-- <button @click="a=!a">切换样式按钮</button> -->
+     
+     <!-- 
+       数组控制样式类：
+          :class="[响应式数据1，.....]"
+          控制响应式数据的值是对应的样式类或者没有值，来控制是否有这个样式
+      -->
+     <p :class="[active,big]">数据信息资源学习只能比别人多努力一点了既然还差这么多只能符出比别人更多的时间来弥补这个差距</p>
+     <button @click="handle">切换样式按钮</button>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+       a:false,
+       active:'',
+       big:'big'
+      },
+      methods:{
+       handle(){
+         this.a = !this.a
+         this.active = this.active === '' ? 'active' : '';
+       }
+      },
+   
+    });
+  </script>
+</body>
+
+</html>

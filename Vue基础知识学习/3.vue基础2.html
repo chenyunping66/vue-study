@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视图更改影响数据更改</title>
+</head>
+
+<body>
+  <div id="app">
+    人民币：￥ <input type="text" v-model="priceRMB">  
+    <!-- v-model 1.先实现把数据绑定到视图层（给input设置value值），
+      2.然后监听视图文本框内容的改变，会把数据也跟着改变（value值的改变 ），视图也会重新渲染-->
+    <br>
+    美元：$<span>{{priceRMB/7.1477}}</span>
+  </div>
+  <!-- IMPORT JS -->
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        priceRMB: 0
+      }
+    })
+  </script>
+</body>
+
+</html>
